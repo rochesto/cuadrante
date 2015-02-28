@@ -1,0 +1,28 @@
+<?php 
+    
+
+    $year = date('Y'); 
+    $month = date('m');
+
+    $events = json_encode(array( 
+
+        array( 
+            'id' => 1, 
+            'title' => "Event1", 
+            'start' => "$year-$month-10", 
+            'url' => "http://yahoo.com/" 
+        ), 
+
+        array( 
+            'id' => 2, 
+            'title' => "Event2", 
+            'start' => "$year-$month-20", 
+            'end' => "$year-$month-22", 
+            'url' => "http://yahoo.com/" 
+      ) 
+
+   ));
+
+    return $events;
+
+?>
