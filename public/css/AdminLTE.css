@@ -3571,5 +3571,6 @@ fieldset[disabled] .btn-vk.active {
   color: black;
 }
 
-.turnosBox {
+.main-footer {
+  text-align: center;
 }

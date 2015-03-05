@@ -10,13 +10,13 @@
         
     </head>
     <body class="skin-blue  pace-done" style="min-height: 1071px; cursor: auto;">
-        <div class="pace  pace-inactive">
+       {{--  <div class="pace  pace-inactive">
             <div class="pace-progress" data-progress-text="100%" data-progress="99" style="width: 100%;">
                  <div class="pace-progress-inner"></div>
             </div>
             <div class="pace-activity">
             </div>
-        </div>
+        </div> --}}
         
         <header class="header">
             @include('layouts.title')
@@ -36,6 +36,12 @@
             
             @show
         </div>
+
+        <footer class="main-footer">
+            <strong>Copyright © 2015</strong> Autor: <a href="http:\\terralibre.es">Rochesto</a>
+            <br> All rights reserved.
+            <b id="version">Version</b> 0.1
+        </footer>
         
         
     </body>

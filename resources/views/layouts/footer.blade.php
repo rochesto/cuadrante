@@ -1,9 +1,8 @@
-<footer>
+<div>
 	<input type="hidden" data-data="{{ $events }}" id="eventos" />
 	<input type="hidden" data-data="{{ $turnos }}" id="turnosFooter" />
-	<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
-    footer 
-</footer>
+	<input type="hidden" name="_token" value="{{{ csrf_token() }}}" /> 
+</div>
 
 <!-- 
 

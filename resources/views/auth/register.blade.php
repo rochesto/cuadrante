@@ -1,4 +1,4 @@
-@extends('app')
+@extends ('layouts.base')
 
 @section('content')
 <div class="container-fluid">
@@ -9,12 +9,9 @@
 				<div class="panel-body">
 					@if (count($errors) > 0)
 						<div class="alert alert-danger">
-							<strong>Whoops!</strong> There were some problems with your input.<br><br>
-							<ul>
-								@foreach ($errors->all() as $error)
-									<li>{{ $error }}</li>
-								@endforeach
-							</ul>
+							<strong>Whoops!</strong> Ha acorruido algún error.<br> Vuelva a introducir los datos<br>
+							-Asegurese de poner una contraseña que incluya como minimo una mayuscula y un número.
+							
 						</div>
 					@endif
 
@@ -38,7 +35,7 @@
 						<div class="form-group">
 							<label class="col-md-4 control-label">Contraseña</label>
 							<div class="col-md-6">
-								<input type="password" class="form-control" name="password">
+								<input type="password" class="form-control" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Debe contener 8 caracteres o mas y al menos un numero, una mayuscula y una minuscula">
 							</div>
 						</div>
 

@@ -1,8 +1,8 @@
-<footer>
+<div>
     <input type="hidden" data-data="{{ $turnos }}" id="turnosFooter" />
     <input type="hidden" data-data="{{ $horas }}" id="horasFooter" />
 	<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
-</footer>
+</div>
 
 <script>
 	
