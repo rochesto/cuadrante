@@ -15,6 +15,7 @@
 
     $(document).ready(function(){
 
+
     	$('.content').on('contextmenu', function(event) {
     		event.preventDefault();
     	});

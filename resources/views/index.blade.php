@@ -16,7 +16,6 @@
                         <h4 class="box-title">Turnos</h4>
                     </div>
                     <div class="box-body">
-
                         <!-- the events -->
 						<div id="turnosContent" class="draggable">
                             <!--  Boton remove
@@ -26,6 +25,7 @@
 
                     </div><!-- /.box-body -->
 					<br>
+
                     <div class="box box-primary">
                         <div class="box-header">
                             <h6 class="box-title">Añadir Evento</h6>
@@ -46,14 +46,14 @@
 			</div>
 			<div class="col-md-10">
 				<div id="errorCal" class="errorCal"></div>
-				<div id="editEvent">
+				<div id="editEvent" class="quitMobile">
 					<label for="title">Title</label>
 					<input type="text" id="editEventTitle">
 					<textarea name="editEventdesc" id="editEventdesc" cols="25" rows="3"></textarea>
 					<label for="color">Color</label>
 					<input type="color" value="#3C8DBC" id="editEventcolor">
 				</div>
-				<div id="addEvent">
+				<div id="addEvent" class="quitMobile">
 					<form id="addEventForm">
 						<label for="title">Title</label>
 						<input type="text" id="addEventTitle">
