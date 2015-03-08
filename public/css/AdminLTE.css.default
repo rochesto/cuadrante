@@ -1124,6 +1124,9 @@ body > .header .logo .icon {
     right: -210px;
     left: auto;
   }
+  
+
+
 }
 /* 
    All form elements including input, select, textarea etc.
@@ -1369,6 +1372,7 @@ body > .header .logo .icon {
   .small-box p {
     font-size: 12px;
   }
+
 }
 /*
     component: Boxes
@@ -2331,6 +2335,7 @@ Component: timeline
     font-size: 60px;
     margin-bottom: 40px;
   }
+  
 }
 /* User name [optional] */
 .lockscreen .lockscreen-name {
@@ -3536,4 +3541,49 @@ fieldset[disabled] .btn-vk.active {
 .btn-vk .badge {
   color: #587ea3;
   background-color: #ffffff;
+}
+
+/*
+
+
+
+  USER CONFIGURATE
+
+
+
+*/
+
+.draggable {
+  border-radius: 3px;
+  cursor:pointer;
+  cursor: hand;
+  color: white;
+  margin-top: 2px;
+}
+
+.errorCal {
+  cursor:pointer;
+  cursor: hand;
+}
+
+.login {
+  margin-top: 10%;
+  color: black;
+}
+
+.login a {
+
+  color: black;
+}
+
+.main-footer {
+  text-align: center;
+}
+
+@media only screen and (max-device-width: 640px) {
+  
+  .col-md-2 {
+    display: none;
+  }
+
 }

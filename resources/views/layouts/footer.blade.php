@@ -93,6 +93,9 @@
 
 	    $("#addEvent").hide();
 	    $("#editEvent").hide();
+	    $('#allEventDiv').hide();
+	    $('#divNewNota').hide();
+	    
 
     	//Selecciona los elmentos evento, que seran arrastrados y añadidos a la base de datos
     	function ini_events(ele) {
@@ -122,6 +125,61 @@
 	    /	Funciones ventana emergente
 	    /
 	    */
+	   
+	   	// 
+	   	// Gestion de nuevo evento
+	   	// 
+	   	
+	   	$('#btnNewNota').on('click', function(event) {
+	   		event.preventDefault();
+	   		$('#divNewNota').dialog({
+	   			title: "Nueva nota",
+	   			draggable: true,
+
+	   			buttons: [
+	   			{
+			  		text: "Cancelar",
+			  		click: function(){
+			  			$( this ).dialog( "close" );
+			  		}
+			  	},
+			   	{
+			      	text: "Añadir",
+			      	
+			      	click: function() {
+			        	$( this ).dialog( "close" );
+
+			        	$.ajax({
+				        	headers:
+						    {
+						        'X-CSRF-Token': $('input[name="_token"]').val()
+						    },
+			        		url: 'calendario/add',
+			        		type: 'POST',
+			        		data: { id: 0, title: $('#titleNewNota').val(), start: $('#dateNewNota').val(), backgroundColor:  $('#colorNewNota').val()},
+			        		success: function(resultado){
+			        			if(resultado == 'Ok'){
+        							$('#calendar').fullCalendar('render');
+			        			}
+			        			else{
+			        				errorCal();
+			        			}
+			        		},
+			        	})
+			        	.done(function() {
+			        		console.log("success");
+			        		location.reload();
+			        	})
+			        	.fail(function() {
+			        		console.log("error");
+			        	})
+			        	.always(function() {
+			        		console.log("complete");
+			         	});
+			      	},	
+				}]
+	   		});
+	   	});
 
 	    //Funcion imprimir error
 	    function errorCal(){
@@ -150,10 +208,18 @@
 
 	        dayClick: function(date){
 
-	        	var title = $("#addEventTitle");
+	        	$('#allEvent').text('');
 
-	        	$('#addEvent').dialog({
-	        		title: 'Añadir nota. Día: ' + date.format(),
+	        	jQuery.each(turnos, function(index, val) {
+
+		    		$('#allEvent').append('<option id="turnoActual" style="background-color:'+val['backgroundColor']+'" data-turno="'+val['title']+'" data-description="'+val['description']+'" value="'+ val['id'] +'">'+val['title']+'</option>');
+			    }); 
+
+	        	var title = $("#addEventDiv");
+
+	        	$('#allEventDiv').dialog({
+
+	        		title: 'Añadir turno. Día: ' + date.format(),
 
 				  	buttons: [
 				  	{
@@ -163,10 +229,20 @@
 				  		}
 				  	},
 				    {
-				      	text: "Guardar",
+				      	text: "Añadir",
 				      
 				      	click: function() {
 				        	$( this ).dialog( "close" );
+
+				        	var id = $('#allEvent').val();
+				        	var datos;
+				        	jQuery.each(turnos, function(index, val) {
+				        		if(val['id'] == id){
+				        			datos = {id: val['id'], title: val['title'], start: date.format(), backgroundColor: val['backgroundColor']};
+				        		}
+				        	});
+
+				        	console.log(datos);
 
 				        	$.ajax({
 					        	headers:
@@ -175,7 +251,15 @@
 							    },
 				        		url: 'calendario/add',
 				        		type: 'POST',
-				        		data: { title: $('#addEventTitle').val(), description: $('#addEventdesc').val(), start: date.format(),  backgroundColor: $('#addEventcolor').val() },
+				        		data: datos,
+				        		success: function(resultado){
+				        			if(resultado == 'Ok'){
+	        							$('#calendar').fullCalendar('render');
+				        			}
+				        			else{
+				        				errorCal();
+				        			}
+				        		},
 				        	})
 				        	.done(function() {
 				        		console.log("success");
@@ -189,8 +273,7 @@
 				         	});
 				      	},	
 				    }
-				  ]
-				});
+				]});
 	        },
 
 	        drop: function(date, allDay) {
@@ -256,7 +339,7 @@
 				  	buttons: [
 
 				  	{
-				    	text: "Guardar",
+				    	text: "Editar",
 				    	click: function(){
 				    		$( this ).dialog( "close" );
 				    		$.ajax({
@@ -266,7 +349,7 @@
 							    },
 				        		url: 'calendario/edit',
 				        		type: 'POST',
-				        		data: { id: calEvent.id ,title: $('#editEventTitle').val(), description: $('#editEventdesc').val(),  backgroundColor: $('#editEventcolor').val() },
+				        		data: { id: calEvent.id ,title: $('#editEventTitle').val(), backgroundColor: $('#editEventcolor').val() },
 				        	})
 				        	.done(function() {
 				        		console.log("success");

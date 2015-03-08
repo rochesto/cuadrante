@@ -52,7 +52,7 @@ class EventController extends Controller {
 	{	
 
 		if(Request::ajax()){
-        	if($_POST['id'] == 100){
+        	if($_POST['id'] == 1000){
 
         		$eventoT = new Event;
         		$eventoM = new Event;
@@ -133,7 +133,7 @@ class EventController extends Controller {
 					}
 				}
 				return 'Error';
-        	}elseif($_POST['id'] == 101){
+        	}elseif($_POST['id'] == 1001){
 
         		$eventoT = new Event;
         		$eventoM = new Event;
@@ -203,7 +203,7 @@ class EventController extends Controller {
 					}
 				}
 				return 'Error';
-        	}elseif($_POST['id'] == 102){
+        	}elseif($_POST['id'] == 1002){
 
         		$eventoT = new Event;
         		$eventoT2 = new Event;
@@ -319,11 +319,12 @@ class EventController extends Controller {
 				return 'Error';
         	}
         	else{
+
         		$evento = new Event;
 
 	        	$evento->user_id = Auth::id();
 	        	$evento->title = $_POST['title'];
-	        	$evento->description = $_POST['description'];
+	        	$evento->description = '';
 	        	$evento->allDay = true;
 	        	$evento->start = $_POST['start'];
 	        	$evento->end = '0000-00-00';
@@ -397,7 +398,6 @@ class EventController extends Controller {
 			if ($evento = Event::find($_POST['id'])){
 				
 				$evento->title = $_POST['title'];
-        		$evento->description = $_POST['description'];
         		$evento->backgroundColor = $_POST['backgroundColor'];
 
         		if ($evento->save()) {

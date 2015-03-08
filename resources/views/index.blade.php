@@ -12,15 +12,47 @@
 		<div class="row">
 			<div class="col-md-2">
 				 <div class="box box-primary">
+				 	<div class="box-header">
+                        <h4><button class=".btn .btn-sm" id="btnNewNota">Añadir nota</button></h4>
+                        <div id="divNewNota">
+						    <form action="" id ="add-event-form" name="add-event-form">
+						        <label for="title">Titulo</label>
+						        <input type="text" name="titleNewNota" id="titleNewNota"/>
+						        <p>
+						        <label for="add-date">Fecha</label>
+						        <input type="date" name="dateNewNota" id="dateNewNota" tabindex="-1" />
+						        </p>
+						        <p>
+						        <label for="add-color">Color</label>
+						        <input type="color" name="colorNewNota" id="colorNewNota" tabindex="-1" />
+						        </p>
+						       {{--  <p>
+						        <label for="add-start-time">Start Time</label>
+						        <input type="text" name="start-time" id="start-time" />
+						        </p>
+						        <p>
+						        <label for="add-end-time">End Time</label>
+						        <input type="text" name="end-time" id="end-time" />
+						        </p> --}}
+						       {{--  <p>
+						        <label for="repeats">repeat </label>
+						        <input type="checkbox" name="repeats" id="repeats" value="1"/>
+						        <div id="repeat-options" >
+						             Repeat every: day <input type="radio" value="1" name="repeat-freq" align="bottom">
+						             week <input type="radio" value="7" name="repeat-freq" align="bottom">
+						             two weeks <input type="radio" value="14" name="repeat-freq" align="bottom">
+						        </div> --}}
+						    </form>
+                        </div>
+                    </div>
+                    
                     <div class="box-header">
                         <h4 class="box-title">Turnos</h4>
                     </div>
                     <div class="box-body">
                         <!-- the events -->
 						<div id="turnosContent" class="draggable">
-                            <!--  Boton remove
-                            <div ><button class="btn-lg" id='drop-remove'><i class="fa fa-recycle	"></i>Eliminar</button></div>
-							-->
+                            
 						</div>
 
                     </div><!-- /.box-body -->
@@ -44,16 +76,15 @@
                 </div><!-- /. box -->
 
 			</div>
-			<div class="col-md-10">
+			<div class="col-md-8">
 				<div id="errorCal" class="errorCal"></div>
-				<div id="editEvent" class="quitMobile">
+				<div id="editEvent">
 					<label for="title">Title</label>
 					<input type="text" id="editEventTitle">
-					<textarea name="editEventdesc" id="editEventdesc" cols="25" rows="3"></textarea>
 					<label for="color">Color</label>
 					<input type="color" value="#3C8DBC" id="editEventcolor">
 				</div>
-				<div id="addEvent" class="quitMobile">
+				<div id="addEvent">
 					<form id="addEventForm">
 						<label for="title">Title</label>
 						<input type="text" id="addEventTitle">
@@ -62,7 +93,22 @@
 						<input type="color" value="#3C8DBC" id="addEventcolor">
 					</form>
 				</div>
+				<div id="allEventDiv">
+					<select name="allEvent" id="allEvent">
+						
+					</select>
+				</div>
 				<div id="calendar" class="box box-primary"></div>
+			</div>
+			<div class="col-md-2" id="prueba">
+				<div class="box box-primary">
+				 	<div class="box-header">
+                        <h4 class="box-title">Horas</h4>
+                    </div>
+                    <div class="box-body">
+                        HOla
+                    </div><!-- /.box-body -->
+                </div>
 			</div>
 		</div>
         

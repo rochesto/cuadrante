@@ -134,7 +134,7 @@ class TurnoTableSeeder extends Seeder {
 	        'textColor' => 'white'
         ));
         DB::table('turnos')->insert(array(
-        	'id' => '100',
+        	'id' => '1000',
 			'user_id' => '1000',
 	        'title' => 'Triplete (TMNSLL)',
 	        'description' => 'Tarde mañana noche',
@@ -144,7 +144,7 @@ class TurnoTableSeeder extends Seeder {
 	        'textColor' => 'white'
         ));
         DB::table('turnos')->insert(array(
-        	'id' => '101',
+        	'id' => '1001',
 			'user_id' => '1000',
 	        'title' => 'Triplete (MTNSL)',
 	        'description' => 'Mañana tarde noche',
@@ -154,7 +154,7 @@ class TurnoTableSeeder extends Seeder {
 	        'textColor' => 'white'
         ));
         DB::table('turnos')->insert(array(
-        	'id' => '102',
+        	'id' => '1002',
 			'user_id' => '1000',
 	        'title' => 'Turno (MMTTNNSLL)',
 	        'description' => 'Mañana mañana tarde tarde noche noche',
