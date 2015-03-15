@@ -22,8 +22,8 @@ class Events extends Migration {
 			$table->string('title');
 			$table->text('description');
 			$table->boolean('allDay');
-			$table->date('start');
-			$table->date('end');
+			$table->timestamp('start');
+			$table->timestamp('end');
 			$table->string('url');
 			$table->string('className');
 			$table->string('color');

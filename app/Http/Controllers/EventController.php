@@ -45,7 +45,7 @@ class EventController extends Controller {
 	{	
 
 		if(Request::ajax()){
-        	if($_POST['id'] == 1000){
+        	if($_POST['id'] == 10){
 
         		$eventoT = new Event;
         		$eventoM = new Event;
@@ -133,7 +133,7 @@ class EventController extends Controller {
 					}
 				}
 				return 'Error';
-        	}elseif($_POST['id'] == 1001){
+        	}elseif($_POST['id'] == 11){
 
         		$eventoT = new Event;
         		$eventoM = new Event;
@@ -146,6 +146,13 @@ class EventController extends Controller {
 	        	$eventoN->user_id = Auth::id();
 	        	$eventoS->user_id = Auth::id();
 	        	$eventoL->user_id = Auth::id();
+
+	        	$eventoT->turno_id = '1';
+	        	$eventoM->turno_id = '2';
+	        	$eventoN->turno_id = '3';
+	        	$eventoS->turno_id = '4';
+	        	$eventoL->turno_id = '5';
+
 
 	        	$eventoT->title = 'Tarde';
 	        	$eventoM->title = 'Mañana';
@@ -346,12 +353,11 @@ class EventController extends Controller {
 
 	public function getHoursWeek($start, $end)
 	{	
-		// $start = '2015-03-01';
-		// $end = '2015-03-31';
+		
 		$total = 0.0;
 
 		$events = Event::where('start', '>=', $start)
-			->Where('end', '<=', $end)
+			->Where('start', '<', $end)
 			->get(array('turno_id', 'start'));
 		foreach ($events as $key => $value) {
 			if($value['turno_id'] != 3){
@@ -381,34 +387,84 @@ class EventController extends Controller {
 	public function getHoursMoth($month, $year)
 	{
 		$jueves = "";
-		$lunes = [];
 		$domingo = [];
 		$lastDayMonth = "";
+		$dia = $year.'-'.$month.'-01';
+
+		$numeroSemanas = 0;
+		$semana1 = "";
+		$semana2 = "";
+		$semana3 = "";
+		$semana4 = "";
+		$semana5 = "";
+		$totalHoras = 0;
 
 		/*
 		//Comprobar las semanas del mes y los dias de cada semana
 		*/
-	
-		$date = $year.'-'.$month.'-01';
-		$date = new Carbon($date);
 
-		if($date->format('l') != 'Thursday'){
-			$jueves = $date->modify('Last Thursday');
+		// Primer jueves del mes
+		$jueves = new Carbon($dia);
+		if($jueves->format('l') != 'Thursday'){
+			$jueves = $jueves->modify('Next	 Thursday');
+		}
+
+		// Añadimos los lunes de cada semana a sus variables
+		$date = new Carbon($jueves);
+		$semana1 = $date->modify('Last Monday');
+
+		$semana2 =  new Carbon($semana1);
+		$semana2 = $semana2->modify('Next Monday');
+
+		$semana3 =  new Carbon($semana2);
+		$semana3 = $semana3->modify('Next Monday');
+
+		$semana4 =  new Carbon($semana3);
+		$semana4 = $semana4->modify('Next Monday');
+
+		$semana5 =  new Carbon($semana4);
+		$semana5 = $semana5->modify('Next Monday');
+		$semana5 = $semana5->modify('Next Thursday');
+
+
+		if ($semana5->month == $month) {
+			$numeroSemanas = 5;
+		}else{
+			$numeroSemanas = 4;
 		}
 
 
+		$semana5 = $semana5->modify('Last Monday');
 
-		for ($i=0; $i < 5; $i++) { 
-
-			// $lunes[] = $date->modify('Last Monday');
-
+		/*
+		// Creamos variable con numero de horas por semana
+		 */
+		
+		$primerdia = new Carbon($semana1);
+		if ($numeroSemanas == 5) {
+			$ultimodia = new Carbon($semana5);
+			$ultimodia = $ultimodia->modify('Next Monday');
+		}else{
+			$ultimodia = new Carbon($semana5);
 		}
 		
+		$totalHoras = $this::getHoursWeek($primerdia, $ultimodia);
 
-		return $date;
+		$semana1 = $this::getHoursWeek($semana1, $semana2);
+		$semana2 = $this::getHoursWeek($semana2, $semana3);
+		$semana3 = $this::getHoursWeek($semana3, $semana4);
+		$semana4 = $this::getHoursWeek($semana4, $semana5);
+		if ($numeroSemanas == 5) {
 
+			$semana5 = $this::getHoursWeek($semana5, $semana5->modify('Next Monday'));
 
-		return json_encode($lunes);
+			$semanas = array('semana1' => $semana1, 'semana2' => $semana2, 'semana3' => $semana3, 'semana4' => $semana4, 'semana5' => $semana5, 'semana' => $totalHoras );
+			return json_encode($semanas);
+		}
+
+		$semanas = array('semana1' => $semana1, 'semana2' => $semana2, 'semana3' => $semana3, 'semana4' => $semana4, 'semana' => $totalHoras);
+		return json_encode($semanas);
+
 	}
 
 }

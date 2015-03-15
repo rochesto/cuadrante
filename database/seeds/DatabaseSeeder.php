@@ -144,7 +144,7 @@ class TurnoTableSeeder extends Seeder {
 	  //       'textColor' => 'white'
    //      ));
         DB::table('turnos')->insert(array(
-        	'id' => '1001',
+        	'id' => '11',
 			'user_id' => '10',
 	        'title' => 'Triplete (MTNSL)',
 	        'description' => 'Mañana tarde noche',
