@@ -63,8 +63,7 @@
                             <h6 class="box-title">Añadir Evento</h6>
                         </div>
                         <div class="box-body" id="turnoAdd">
-                        	<input type="text" placeholder="Evento" size="14" id="turnoAddTitle">
-                        	<textarea id="turnoAddDesc" cols="13" rows="2" placeholder="Descripción"></textarea>
+                        	<input type="text" placeholder="Título" size="14" id="turnoAddTitle">
                         	<br>
                         	Color: <input type="color" value="#0055cc" id="turnoAddColor">
                         	<br>
@@ -88,7 +87,6 @@
 					<form id="addEventForm">
 						<label for="title">Title</label>
 						<input type="text" id="addEventTitle">
-						<textarea name="addEventdesc" id="addEventdesc" cols="25" rows="3" placeholder="Descripcion"></textarea>
 						<label for="color">Color</label>
 						<input type="color" value="#3C8DBC" id="addEventcolor">
 					</form>
@@ -100,13 +98,50 @@
 				</div>
 				<div id="calendar" class="box box-primary"></div>
 			</div>
-			<div class="col-md-2" id="prueba">
+			<div class="col-md-2" id="horasColRight">
 				<div class="box box-primary">
-				 	<div class="box-header">
-                        <h4 class="box-title">Horas</h4>
+				 	<div class="fc-left">
+                        <h2 >Horas</h2>
                     </div>
                     <div class="box-body">
-                        HOla
+                        <table>
+                        	<tr id="horasColRightTitle">
+                        		{{-- <th>Sm</th> --}}
+                        		<th>Horas de la semana</th>
+                        	</tr>
+                        	<tr>
+                        		{{-- <td id="horasCol1"></td> --}}
+                        		<td id="horasColText1"></td>
+                        	</tr>
+                        	<tr>
+                        		{{-- <td id="horasCol2"></td> --}}
+                        		<td id="horasColText2"></td>
+                        	</tr>
+                        	<tr>
+                        		{{-- <td id="horasCol3"></td> --}}
+                        		<td id="horasColText3"></td>
+                        	</tr>
+                        	<tr>
+                        		{{-- <td id="horasCol4"></td> --}}
+                        		<td id="horasColText4"></td>
+                        	</tr>
+                        	<tr>
+                        		{{-- <td id="horasCol5"></td> --}}
+                        		<td id="horasColText5"></td>
+                        	</tr>
+                        	<tr>
+                        		{{-- <td id="horasCol6"></td> --}}
+                        		<td id="horasColText6"></td>
+                        	</tr>
+                        	<tr id="horasColRightTitle">
+                        		{{-- <th>Sm</th> --}}
+                        		<th>Horas ciclo</th>
+                        	</tr>
+                        	<tr>
+                        		{{-- <td id="horasCol6"></td> --}}
+                        		<td id="horasColTotal"></td>
+                        	</tr>
+                        </table>
                     </div><!-- /.box-body -->
                 </div>
 			</div>

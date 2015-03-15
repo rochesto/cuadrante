@@ -24,6 +24,9 @@ class UserProfile extends Migration {
 			$table->integer('baja');
 			$table->integer('indisposicion');
 			$table->integer('examen');
+			$table->integer('comision');
+	        $table->integer('horas_semanales');
+	        $table->integer('singularizados');
 			$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 			$table->timestamps();
 

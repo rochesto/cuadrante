@@ -1,6 +1,7 @@
 <div>
 	<input type="hidden" data-data="{{ $events }}" id="eventos" />
 	<input type="hidden" data-data="{{ $turnos }}" id="turnosFooter" />
+	<input type="hidden" data-data="{{ $horas }}" id="horasFooter" />
 	<input type="hidden" name="_token" value="{{{ csrf_token() }}}" /> 
 </div>
 
@@ -16,6 +17,7 @@
     $(document).ready(function(){
 
 
+
     	$('.content').on('contextmenu', function(event) {
     		event.preventDefault();
     	});
@@ -28,8 +30,9 @@
     	
     	var eventos = $('#eventos').data('data');
     	var turnos = $('#turnosFooter').data('data');
+    	var horas = $('#horasFooter').data('data');
 
-
+    	console.log(horas);
     	 /*
 	    /
 	    /	Gestion de turnos
@@ -132,6 +135,9 @@
 	   	
 	   	$('#btnNewNota').on('click', function(event) {
 	   		event.preventDefault();
+
+	   		$("#dateNewNota").attr('value', Date("d-m-Y"));
+
 	   		$('#divNewNota').dialog({
 	   			title: "Nueva nota",
 	   			draggable: true,
@@ -190,8 +196,8 @@
 
 	    ini_events($('#draggable div.draggable'));
 	    
-
-
+	    
+		
 
 	    /*
 		/
@@ -201,9 +207,12 @@
 	    */
        	$('#calendar').fullCalendar({
 
+       		
+       		
        		editable: true,
             droppable: true,
             sortable: true,
+            weekNumbers: true,
 	        events: eventos,
 
 	        dayClick: function(date){
@@ -279,6 +288,7 @@
 	        drop: function(date, allDay) {
 
 
+
 	        	// retrieve the dropped element's stored Event Object
                 var originalEventObject = $(this).data('eventObject');
 
@@ -314,7 +324,7 @@
 	        	})
 	        	.done(function() {
 	        		console.log("success");
-	        		
+					
 	        	})
 	        	.fail(function() {
 	        		console.log("error");
@@ -433,10 +443,22 @@
 		    		
 		    	});
 		    },
-
-		    eventMouseout: function( event ) {
-
-		    },
         });
+
+		// //Funcion para obtener el numero de la primera semana de un mes
+		// function firstWeekMonth(month, year){
+		// 	var day = '01-'+month+'-'+year;
+		// 	var weekday = moment(day, "DD-MM-YYYY").week();
+		// 	return(weekday);
+		// }
+
+		// console.log(
+		// 	firstWeekMonth($('#calendar').fullCalendar('getDate').format('MM'), $('#calendar').fullCalendar('getDate').year())
+		// );
+		
+		//Cargamos las horas de cada semana
+		
+		
+
     });
 </script>

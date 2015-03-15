@@ -12,12 +12,12 @@
 */
 
 // Gestion de eventos
-
 Route::get('/', 'EventController@index');
 Route::post('calendario/add', 'EventController@addEvent');
 Route::post('calendario/destroy', 'EventController@destroyEvent');
 Route::post('calendario/update', 'EventController@updateEvent');
 Route::post('calendario/edit', 'EventController@editEvent');
+// Route::post('calendario/horas', 'EventController@getHoursWeek');
 
 // Gestion de turnos
 Route::post('calendario/turno', 'TurnosController@addTurno');

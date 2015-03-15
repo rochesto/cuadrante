@@ -40,7 +40,7 @@ class UserTableSeeder extends Seeder {
     {
  		
  		DB::table('users')->insert(array(
-            'id' => '1000',
+            'id' => '10',
             'name' => 'xefe',
             'email' => 'rocho06@gmail.com',
             'password' => Hash::make('Ches9755')
@@ -62,7 +62,7 @@ class TurnoTableSeeder extends Seeder {
     public function run()
     {
         DB::table('turnos')->insert(array(
-			'user_id' => '1000',
+			'user_id' => '10',
 	        'title' => 'Tarde',
 	        'description' => 'Turno de tarde',
 	        'horas' => 8,
@@ -71,7 +71,7 @@ class TurnoTableSeeder extends Seeder {
 	        'textColor' => 'white'
         ));
         DB::table('turnos')->insert(array(
-			'user_id' => '1000',
+			'user_id' => '10',
 	        'title' => 'Mañana',
 	        'description' => 'Turno de mañana',
 	        'horas' => '8',
@@ -80,7 +80,7 @@ class TurnoTableSeeder extends Seeder {
 	        'textColor' => 'white'
         ));
         DB::table('turnos')->insert(array(
-			'user_id' => '1000',
+			'user_id' => '10',
 	        'title' => 'Noche',
 	        'description' => 'Turno de noche',
 	        'horas' => '8',
@@ -89,7 +89,7 @@ class TurnoTableSeeder extends Seeder {
 	        'textColor' => 'white'
         ));
         DB::table('turnos')->insert(array(
-			'user_id' => '1000',
+			'user_id' => '10',
 	        'title' => 'Saliente',
 	        'description' => 'Turno de Saliente',
 	        'horas' => '0',
@@ -98,7 +98,7 @@ class TurnoTableSeeder extends Seeder {
 	        'textColor' => 'white'
         ));
         DB::table('turnos')->insert(array(
-			'user_id' => '1000',
+			'user_id' => '10',
 	        'title' => 'Libre',
 	        'description' => 'Turno de Libre',
 	        'horas' => '0',
@@ -107,7 +107,7 @@ class TurnoTableSeeder extends Seeder {
 	        'textColor' => 'white'
         ));
         DB::table('turnos')->insert(array(
-			'user_id' => '1000',
+			'user_id' => '10',
 	        'title' => 'Vacaciones',
 	        'description' => 'Vacaciones',
 	        'horas' => '7',
@@ -116,7 +116,7 @@ class TurnoTableSeeder extends Seeder {
 	        'textColor' => 'white'
         ));
         DB::table('turnos')->insert(array(
-			'user_id' => '1000',
+			'user_id' => '10',
 	        'title' => 'Asunto Propio',
 	        'description' => 'Día de asunto propio',
 	        'horas' => '7',
@@ -125,7 +125,7 @@ class TurnoTableSeeder extends Seeder {
 	        'textColor' => 'white'
         ));
         DB::table('turnos')->insert(array(
-			'user_id' => '1000',
+			'user_id' => '10',
 	        'title' => 'Permiso Urgente',
 	        'description' => 'Día de permiso urgente',
 	        'horas' => '5.5',
@@ -133,19 +133,19 @@ class TurnoTableSeeder extends Seeder {
 	        'backgroundColor' => 'green',
 	        'textColor' => 'white'
         ));
-        DB::table('turnos')->insert(array(
-        	'id' => '1000',
-			'user_id' => '1000',
-	        'title' => 'Triplete (TMNSLL)',
-	        'description' => 'Tarde mañana noche',
-	        'horas' => '24',
-	        'allDay' => '1',
-	        'backgroundColor' => 'black',
-	        'textColor' => 'white'
-        ));
+   //      DB::table('turnos')->insert(array(
+   //      	'id' => '10',
+			// 'user_id' => '10',
+	  //       'title' => 'Triplete (TMNSLL)',
+	  //       'description' => 'Tarde mañana noche',
+	  //       'horas' => '24',
+	  //       'allDay' => '1',
+	  //       'backgroundColor' => 'black',
+	  //       'textColor' => 'white'
+   //      ));
         DB::table('turnos')->insert(array(
         	'id' => '1001',
-			'user_id' => '1000',
+			'user_id' => '10',
 	        'title' => 'Triplete (MTNSL)',
 	        'description' => 'Mañana tarde noche',
 	        'horas' => '24',
@@ -153,16 +153,16 @@ class TurnoTableSeeder extends Seeder {
 	        'backgroundColor' => 'black',
 	        'textColor' => 'white'
         ));
-        DB::table('turnos')->insert(array(
-        	'id' => '1002',
-			'user_id' => '1000',
-	        'title' => 'Turno (MMTTNNSLL)',
-	        'description' => 'Mañana mañana tarde tarde noche noche',
-	        'horas' => '48',
-	        'allDay' => '1',
-	        'backgroundColor' => 'black',
-	        'textColor' => 'white'
-        ));
+   //      DB::table('turnos')->insert(array(
+   //      	'id' => '1002',
+			// 'user_id' => '10',
+	  //       'title' => 'Turno (MMTTNNSLL)',
+	  //       'description' => 'Mañana mañana tarde tarde noche noche',
+	  //       'horas' => '48',
+	  //       'allDay' => '1',
+	  //       'backgroundColor' => 'black',
+	  //       'textColor' => 'white'
+   //      ));
     }
 }
 
@@ -179,7 +179,10 @@ class ProfileUserTableSeeder extends Seeder {
         	'permiso_urgente' => '0',
         	'baja' => '0',
         	'indisposicion' => '0',
-        	'examen' => '0' 
+        	'examen' => '0',
+        	'comision' => '0',
+        	'horas_semanales' => '40',
+        	'singularizados' => '0'
         ));
 
     }

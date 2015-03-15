@@ -7,6 +7,7 @@ use Request;
 
 use Cuadrante\Event;
 use Cuadrante\Turno;
+use Carbon\Carbon;
 
 class EventController extends Controller {
 
@@ -21,19 +22,11 @@ class EventController extends Controller {
 
 		if (Auth::check())
 		{
-		    $id = Auth::id();
+			$events = $this::allEvents();
+ 			$turnos = $this::allTurnos();
+ 			$horas = $this::getHoursMoth(3, 2015);
 
-			$turnos = Turno::where('user_id', '=', 1000)
-		    	->orWhere('user_id', '=', $id)
-		    	->get(array('id', 'user_id', 'title', 'description', 'horas', 'backgroundColor'));
-			$turnos = json_encode($turnos);
-
-			$events = Event::where('user_id', '=', $id)
-				->get(array('id', 'title', 'description', 'allDay', 'start', 'end', 'url', 'className', 'color', 'backgroundColor', 'borderColor', 'textColor'));
-
-			$events = json_encode($events);
-
-			return view('index')->with(compact('events'))->with(compact('turnos'));
+			return view('index')->with(compact('events'))->with(compact('turnos'))->with(compact('horas'));
 		}
 		else
 		{
@@ -67,6 +60,13 @@ class EventController extends Controller {
 	        	$eventoS->user_id = Auth::id();
 	        	$eventoL->user_id = Auth::id();
 	        	$eventoL2->user_id = Auth::id();
+
+	        	$eventoT->turno_id = '1';
+	        	$eventoM->turno_id = '2';
+	        	$eventoN->turno_id = '3';
+	        	$eventoS->turno_id = '4';
+	        	$eventoL->turno_id = '5';
+	        	$eventoL2->turno_id = '5';
 
 	        	$eventoT->title = 'Tarde';
 	        	$eventoM->title = 'Mañana';
@@ -203,126 +203,14 @@ class EventController extends Controller {
 					}
 				}
 				return 'Error';
-        	}elseif($_POST['id'] == 1002){
-
-        		$eventoT = new Event;
-        		$eventoT2 = new Event;
-        		$eventoM = new Event;
-        		$eventoM2 = new Event;
-        		$eventoN = new Event;
-        		$eventoN2 = new Event;
-        		$eventoS = new Event;
-        		$eventoL = new Event;
-        		$eventoL2 = new Event;
-
-	        	$eventoT->user_id = Auth::id();
-	        	$eventoT2->user_id = Auth::id();
-	        	$eventoM->user_id = Auth::id();
-	        	$eventoM2->user_id = Auth::id();
-	        	$eventoN->user_id = Auth::id();
-	        	$eventoN2->user_id = Auth::id();
-	        	$eventoS->user_id = Auth::id();
-	        	$eventoL->user_id = Auth::id();
-	        	$eventoL2->user_id = Auth::id();
-
-	        	$eventoT->title = 'Tarde';
-	        	$eventoT2->title = 'Tarde';
-	        	$eventoM->title = 'Mañana';
-	        	$eventoM2->title = 'Mañana';
-	        	$eventoN->title = 'Noche';
-	        	$eventoN2->title = 'Noche';
-	        	$eventoS->title = 'Saliente';
-	        	$eventoL->title = 'Libre';
-	        	$eventoL2->title = 'Libre';
-
-	        	$dia = date($_POST['start']);
-	        	$eventoM->start = $dia;
-	        	$eventoM2->start = date('Y-m-d', strtotime($dia."+1 day"));
-	        	$eventoT->start = date('Y-m-d', strtotime($dia."+2 day"));
-	        	$eventoT2->start = date('Y-m-d', strtotime($dia."+3 day"));
-	        	$eventoN->start = date('Y-m-d', strtotime($dia."+4 day"));
-	        	$eventoN2->start = date('Y-m-d', strtotime($dia."+5 day"));
-	        	$eventoS->start = date('Y-m-d', strtotime($dia."+6 day"));
-	        	$eventoL->start = date('Y-m-d', strtotime($dia."+7 day"));
-	        	$eventoL2->start = date('Y-m-d', strtotime($dia."+8 day"));
-
-
-	        	$eventoT->end = '0000-00-00';
-	        	$eventoT2->end = '0000-00-00';
-	        	$eventoM->end = '0000-00-00';
-	        	$eventoM2->end = '0000-00-00';
-	        	$eventoN->end = '0000-00-00';
-	        	$eventoN2->end = '0000-00-00';
-	        	$eventoS->end = '0000-00-00';
-	        	$eventoL->end = '0000-00-00';
-	        	$eventoL2->end = '0000-00-00';
-
-	        	$eventoT->className = 'Tarde';
-	        	$eventoT2->className = 'Tarde';
-	        	$eventoM->className = 'Mañana';
-	        	$eventoM2->className = 'Mañana';
-	        	$eventoN->className = 'Noche';
-	        	$eventoN2->className = 'Noche';
-	        	$eventoS->className = 'Saliente';
-	        	$eventoL->className = 'Libre';
-	        	$eventoL2->className = 'Libre';
-
-	        	$eventoT->backgroundColor = '#357CA5';
-	        	$eventoT2->backgroundColor = '#357CA5';
-	        	$eventoM->backgroundColor = '#357CA5';
-	        	$eventoM2->backgroundColor = '#357CA5';
-	        	$eventoN->backgroundColor = '#357CA5';
-	        	$eventoN2->backgroundColor = '#357CA5';
-	        	$eventoS->backgroundColor = '#00ffff';
-	        	$eventoL->backgroundColor = 'green';
-	        	$eventoL2->backgroundColor = 'green';
-
-	        	$eventoT->borderColor = 'black';
-	        	$eventoT2->borderColor = 'black';
-	        	$eventoM->borderColor = 'black';
-	        	$eventoM2->borderColor = 'black';
-	        	$eventoN->borderColor = 'black';
-	        	$eventoN2->borderColor = 'black';
-	        	$eventoS->borderColor = 'black';
-	        	$eventoL->borderColor = 'black';
-	        	$eventoL2->borderColor = 'black';
-	        	
-	        	$eventoT->textColor = 'white';
-	        	$eventoT2->textColor = 'white';
-	        	$eventoM->textColor = 'white';
-	        	$eventoM2->textColor = 'white';
-				$eventoN->textColor = 'white';
-				$eventoN2->textColor = 'white';
-				$eventoS->textColor = 'white';
-				$eventoL->textColor = 'white';
-				$eventoL2->textColor = 'white';
-
-	        	if ($eventoT->save()){
-	        		if ($eventoT2->save()){
-	        			if ($eventoM->save()){
-	        				if ($eventoM2->save()){
-	        					if ($eventoN->save()){
-	        						if ($eventoN2->save()){
-	        							if ($eventoS->save()){
-	        								if ($eventoL->save()){
-	        									if ($eventoL2->save()){
-													return 'Oka';
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-				return 'Error';
+        	
         	}
         	else{
 
         		$evento = new Event;
 
 	        	$evento->user_id = Auth::id();
+	        	$evento->turno_id = $_POST['id'];
 	        	$evento->title = $_POST['title'];
 	        	$evento->description = '';
 	        	$evento->allDay = true;
@@ -386,6 +274,8 @@ class EventController extends Controller {
 		}
 	}
 
+	
+
 	/**
 	 * Remove the specified resource from storage.
 	 *
@@ -407,6 +297,118 @@ class EventController extends Controller {
 			}
 			return 'Error';
 		}
+	}
+
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @return Response
+	*/
+
+	public function allTurnos(){
+
+		$id = Auth::id();
+
+		$turnos = Turno::where('user_id', '=', 10)
+		    	->orWhere('user_id', '=', $id)
+		    	->get(array('id', 'user_id', 'title', 'description', 'horas', 'backgroundColor'));
+		$turnos = json_encode($turnos);
+
+		return $turnos;
+	}
+
+	/**
+	 * 
+	 *
+	 * @return 
+	*/
+
+	public function allEvents(){
+
+		$id = Auth::id();
+
+		$events = Event::where('user_id', '=', $id)
+				->get(array('id', 'turno_id', 'title', 'description', 'allDay', 'start', 'end', 'url', 'className', 'color', 'backgroundColor', 'borderColor', 'textColor'));
+
+		$events = json_encode($events);
+
+		return $events;
+	}
+
+
+	/**
+	 * Obtener las horas entre dos fechas
+	 * @param start
+	 * @param  end
+	 *
+	 * @return Response
+	*/
+
+	public function getHoursWeek($start, $end)
+	{	
+		// $start = '2015-03-01';
+		// $end = '2015-03-31';
+		$total = 0.0;
+
+		$events = Event::where('start', '>=', $start)
+			->Where('end', '<=', $end)
+			->get(array('turno_id', 'start'));
+		foreach ($events as $key => $value) {
+			if($value['turno_id'] != 3){
+				$horas = Turno::find($value['turno_id'], array('horas'));
+	    		$horas = floatval($horas['horas']);
+	    		$total = $total + $horas;
+			}elseif ($value['turno_id'] == 3) {
+				if($end == $value['start']){
+					$total = $total + 2.0;
+				}else{
+					$horas = Turno::find($value['turno_id'], array('horas'));
+	    			$horas = floatval($horas['horas']);
+	    			$total = $total + $horas;
+				}
+			}
+		}
+		return $total;
+	}
+	/**
+	 * Obtener las horas entre dos fechas
+	 * @param month
+	 * 		obtenidos por post
+	 *
+	 * @return Response
+	*/
+
+	public function getHoursMoth($month, $year)
+	{
+		$jueves = "";
+		$lunes = [];
+		$domingo = [];
+		$lastDayMonth = "";
+
+		/*
+		//Comprobar las semanas del mes y los dias de cada semana
+		*/
+	
+		$date = $year.'-'.$month.'-01';
+		$date = new Carbon($date);
+
+		if($date->format('l') != 'Thursday'){
+			$jueves = $date->modify('Last Thursday');
+		}
+
+
+
+		for ($i=0; $i < 5; $i++) { 
+
+			// $lunes[] = $date->modify('Last Monday');
+
+		}
+		
+
+		return $date;
+
+
+		return json_encode($lunes);
 	}
 
 }

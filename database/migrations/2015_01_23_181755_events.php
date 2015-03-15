@@ -18,6 +18,7 @@ class Events extends Migration {
 			
 			$table->increments('id');
 			$table->integer('user_id')->unsigned();
+			$table->integer('turno_id')->unsigned();
 			$table->string('title');
 			$table->text('description');
 			$table->boolean('allDay');
@@ -30,6 +31,7 @@ class Events extends Migration {
 			$table->string('borderColor');
 			$table->string('textColor');
 			$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+			// $table->foreign('turno_id')->references('id')->on('turnos');
 			$table->timestamps();
 			
 		});	

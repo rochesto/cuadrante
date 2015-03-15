@@ -105,7 +105,6 @@
         /*
         Gestionas horas user
          */
-        
         $('#profileHorasAP').attr('value', horas[0]['asuntos_propios']);
         $('#profileHorasVacaciones').attr('value', horas[0]['vacaciones']);
         $('#profileHorasPPU').append(horas[0]['permiso_urgente']);
