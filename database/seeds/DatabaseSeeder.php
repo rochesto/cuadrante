@@ -108,20 +108,29 @@ class TurnoTableSeeder extends Seeder {
         ));
         DB::table('turnos')->insert(array(
 			'user_id' => '10',
-	        'title' => 'Vacaciones',
-	        'description' => 'Vacaciones',
-	        'horas' => '7',
-	        'allDay' => '1',
-	        'backgroundColor' => 'olive',
-	        'textColor' => 'white'
-        ));
-        DB::table('turnos')->insert(array(
-			'user_id' => '10',
 	        'title' => 'Asunto Propio',
 	        'description' => 'Día de asunto propio',
 	        'horas' => '7',
 	        'allDay' => '1',
 	        'backgroundColor' => 'grey',
+	        'textColor' => 'white'
+        ));
+        DB::table('turnos')->insert(array(
+			'user_id' => '10',
+	        'title' => 'Singularizado',
+	        'description' => 'Singularizado',
+	        'horas' => '0',
+	        'allDay' => '1',
+	        'backgroundColor' => '#22ee11',
+	        'textColor' => 'white'
+        ));
+        DB::table('turnos')->insert(array(
+			'user_id' => '10',
+	        'title' => 'Vacaciones',
+	        'description' => 'Vacaciones',
+	        'horas' => '7',
+	        'allDay' => '1',
+	        'backgroundColor' => 'olive',
 	        'textColor' => 'white'
         ));
         DB::table('turnos')->insert(array(

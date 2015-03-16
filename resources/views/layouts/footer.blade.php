@@ -32,7 +32,6 @@
     	var turnos = $('#turnosFooter').data('data');
     	var horas = $('#horasFooter').data('data');
 
-    	console.log(horas);
     	 /*
 	    /
 	    /	Gestion de turnos
@@ -444,19 +443,18 @@
 		    	});
 		    },
         });
-
-		// //Funcion para obtener el numero de la primera semana de un mes
-		// function firstWeekMonth(month, year){
-		// 	var day = '01-'+month+'-'+year;
-		// 	var weekday = moment(day, "DD-MM-YYYY").week();
-		// 	return(weekday);
-		// }
-
-		// console.log(
-		// 	firstWeekMonth($('#calendar').fullCalendar('getDate').format('MM'), $('#calendar').fullCalendar('getDate').year())
-		// );
 		
 		//Cargamos las horas de cada semana
+		//
+		console.log(horas);
+		$('#horasColText').append('<tr id="horasColRightTitle"><th>Horas</th><th>restantes</th></tr>');
+		for (var i = 1; i < Object.keys(horas).length - 2; i++) {
+			var text = 'semana'+i;
+			var rest = 37.5 - parseInt(horas[text]);
+			$('#horasColText').append('<tr><td id="horasColText'+i+'">'+horas[text]+'</td><td>'+rest+'</td></tr>');
+		};	
+		$('#horasColText').append('<tr id="horasColRightTitle"><th>Horas ciclo</th></tr><tr><td id="horasColTotal">'+horas['semana']+'</td></tr>');
+
 		
 		
 

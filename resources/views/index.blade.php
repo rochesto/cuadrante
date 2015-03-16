@@ -103,45 +103,9 @@
 				 	<div class="fc-left">
                         <h2 >Horas</h2>
                     </div>
-                    <div class="box-body">
-                        <table>
-                        	<tr id="horasColRightTitle">
-                        		{{-- <th>Sm</th> --}}
-                        		<th>Horas de la semana</th>
-                        	</tr>
-                        	<tr>
-                        		{{-- <td id="horasCol1"></td> --}}
-                        		<td id="horasColText1"></td>
-                        	</tr>
-                        	<tr>
-                        		{{-- <td id="horasCol2"></td> --}}
-                        		<td id="horasColText2"></td>
-                        	</tr>
-                        	<tr>
-                        		{{-- <td id="horasCol3"></td> --}}
-                        		<td id="horasColText3"></td>
-                        	</tr>
-                        	<tr>
-                        		{{-- <td id="horasCol4"></td> --}}
-                        		<td id="horasColText4"></td>
-                        	</tr>
-                        	<tr>
-                        		{{-- <td id="horasCol5"></td> --}}
-                        		<td id="horasColText5"></td>
-                        	</tr>
-                        	<tr>
-                        		{{-- <td id="horasCol6"></td> --}}
-                        		<td id="horasColText6"></td>
-                        	</tr>
-                        	<tr id="horasColRightTitle">
-                        		{{-- <th>Sm</th> --}}
-                        		<th>Horas ciclo</th>
-                        	</tr>
-                        	<tr>
-                        		{{-- <td id="horasCol6"></td> --}}
-                        		<td id="horasColTotal"></td>
-                        	</tr>
-                        </table>
+                    <div class="box-body" id="horasColText">
+                        
+                        	
                     </div><!-- /.box-body -->
                 </div>
 			</div>

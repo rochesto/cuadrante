@@ -24,7 +24,7 @@ class EventController extends Controller {
 		{
 			$events = $this::allEvents();
  			$turnos = $this::allTurnos();
- 			$horas = $this::getHoursMoth(3, 2015);
+ 			$horas = $this::getHoursMoth(4, 2015);
 
 			return view('index')->with(compact('events'))->with(compact('turnos'))->with(compact('horas'));
 		}
@@ -387,31 +387,33 @@ class EventController extends Controller {
 	public function getHoursMoth($month, $year)
 	{
 		$jueves = "";
-		$domingo = [];
 		$lastDayMonth = "";
 		$dia = $year.'-'.$month.'-01';
 
 		$numeroSemanas = 0;
+		$primeraSemana = 0;
 		$semana1 = "";
 		$semana2 = "";
 		$semana3 = "";
 		$semana4 = "";
 		$semana5 = "";
+		$semana6 = "";
+		$semana7 = "";
 		$totalHoras = 0;
 
 		/*
 		//Comprobar las semanas del mes y los dias de cada semana
 		*/
+	
+		$semana1 = new Carbon($dia);
+		$semana1 = $semana1->modify('Last Monday');
+
 
 		// Primer jueves del mes
 		$jueves = new Carbon($dia);
 		if($jueves->format('l') != 'Thursday'){
 			$jueves = $jueves->modify('Next	 Thursday');
 		}
-
-		// Añadimos los lunes de cada semana a sus variables
-		$date = new Carbon($jueves);
-		$semana1 = $date->modify('Last Monday');
 
 		$semana2 =  new Carbon($semana1);
 		$semana2 = $semana2->modify('Next Monday');
@@ -426,21 +428,31 @@ class EventController extends Controller {
 		$semana5 = $semana5->modify('Next Monday');
 		$semana5 = $semana5->modify('Next Thursday');
 
-
 		if ($semana5->month == $month) {
 			$numeroSemanas = 5;
 		}else{
 			$numeroSemanas = 4;
 		}
 
-
 		$semana5 = $semana5->modify('Last Monday');
+
+		$semana6 =  new Carbon($semana5);
+		$semana6 = $semana6->modify('Next Monday');
+
+		$semana7 =  new Carbon($semana6);
+		$semana7 = $semana7->modify('Next Monday');
 
 		/*
 		// Creamos variable con numero de horas por semana
 		 */
-		
-		$primerdia = new Carbon($semana1);
+		if ($jueves->day <= 4) {
+			$primerdia = new Carbon($semana1);
+			$primeraSemana = 1;
+		}else{
+			$primerdia = new Carbon($semana2);
+			$primeraSemana = 2;
+		}
+
 		if ($numeroSemanas == 5) {
 			$ultimodia = new Carbon($semana5);
 			$ultimodia = $ultimodia->modify('Next Monday');
@@ -454,15 +466,11 @@ class EventController extends Controller {
 		$semana2 = $this::getHoursWeek($semana2, $semana3);
 		$semana3 = $this::getHoursWeek($semana3, $semana4);
 		$semana4 = $this::getHoursWeek($semana4, $semana5);
-		if ($numeroSemanas == 5) {
+		$semana5 = $this::getHoursWeek($semana5, $semana6);
+		$semana6 = $this::getHoursWeek($semana6, $semana7);
 
-			$semana5 = $this::getHoursWeek($semana5, $semana5->modify('Next Monday'));
+		$semanas = array('semana1' => $semana1, 'semana2' => $semana2, 'semana3' => $semana3, 'semana4' => $semana4, 'semana5' => $semana5, 'semana6' => $semana6,  'semana' => $totalHoras, 'primeraSemana' => $primeraSemana, 'numeroSemanas' => $numeroSemanas);
 
-			$semanas = array('semana1' => $semana1, 'semana2' => $semana2, 'semana3' => $semana3, 'semana4' => $semana4, 'semana5' => $semana5, 'semana' => $totalHoras );
-			return json_encode($semanas);
-		}
-
-		$semanas = array('semana1' => $semana1, 'semana2' => $semana2, 'semana3' => $semana3, 'semana4' => $semana4, 'semana' => $totalHoras);
 		return json_encode($semanas);
 
 	}
