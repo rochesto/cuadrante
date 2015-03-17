@@ -24,7 +24,7 @@ class EventController extends Controller {
 		{
 			$events = $this::allEvents();
  			$turnos = $this::allTurnos();
- 			$horas = $this::getHoursMoth(4, 2015);
+ 			$horas = $this::getHoursMoth(3, 2015);
 
 			return view('index')->with(compact('events'))->with(compact('turnos'))->with(compact('horas'));
 		}

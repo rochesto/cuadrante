@@ -446,17 +446,15 @@
 		
 		//Cargamos las horas de cada semana
 		//
-		console.log(horas);
-		$('#horasColText').append('<tr id="horasColRightTitle"><th>Horas</th><th>restantes</th></tr>');
+		console.log($(".fc-week").css('height'));
+		$('#horasColText').append('<tr id="horasColRightTitle" ><th>Horas</th><th>restantes</th></tr>');
 		for (var i = 1; i < Object.keys(horas).length - 2; i++) {
 			var text = 'semana'+i;
 			var rest = 37.5 - parseInt(horas[text]);
-			$('#horasColText').append('<tr><td id="horasColText'+i+'">'+horas[text]+'</td><td>'+rest+'</td></tr>');
+			$('#horasColText').append('<tr><td id="horasColText'+i+'" style="height: '+$(".fc-week").css('height')+'">'+horas[text]+'</td><td>'+rest+'</td></tr>');
 		};	
 		$('#horasColText').append('<tr id="horasColRightTitle"><th>Horas ciclo</th></tr><tr><td id="horasColTotal">'+horas['semana']+'</td></tr>');
 
-		
-		
 
     });
 </script>
