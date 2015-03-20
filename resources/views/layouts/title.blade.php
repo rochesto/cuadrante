@@ -1,4 +1,5 @@
-<a href="{{ URL::to('/') }}" class="logo">
+
+<a href="{{ URL::to('/?month='.date('m').'&year='.date('Y')) }}" class="logo">
     <!-- Add the class icon to your logo image or logo icon to add the margining -->
     Cuadrante.es
 </a>

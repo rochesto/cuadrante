@@ -24,9 +24,9 @@ class EventController extends Controller {
 		{
 			$events = $this::allEvents();
  			$turnos = $this::allTurnos();
- 			$horas = $this::getHoursMoth(3, 2015);
+ 			$horas = $this::getHoursMoth(Request::input('month'), Request::input('year'));
 
-			return view('index')->with(compact('events'))->with(compact('turnos'))->with(compact('horas'));
+			return view('index')->with(compact('events'))->with(compact('turnos'))->with(compact('horas'))->with('mes', Request::input('month'))->with('year', Request::input('year'));
 		}
 		else
 		{
@@ -355,12 +355,16 @@ class EventController extends Controller {
 	{	
 		
 		$total = 0.0;
+		$countDays = 0;
 
 		$events = Event::where('start', '>=', $start)
 			->Where('start', '<', $end)
 			->get(array('turno_id', 'start'));
 		foreach ($events as $key => $value) {
 			if($value['turno_id'] != 3){
+				if ($value['turno_id'] == 8) {
+					$countDays++;
+				}
 				$horas = Turno::find($value['turno_id'], array('horas'));
 	    		$horas = floatval($horas['horas']);
 	    		$total = $total + $horas;
@@ -373,6 +377,9 @@ class EventController extends Controller {
 	    			$total = $total + $horas;
 				}
 			}
+		}
+		if ($countDays > 6){
+			return 37.5;
 		}
 		return $total;
 	}
@@ -473,6 +480,24 @@ class EventController extends Controller {
 
 		return json_encode($semanas);
 
+	}
+
+	/**
+	 * Obtener las horas entre dos fechas
+	 * @param month
+	 * 		obtenidos por post
+	 *
+	 * @return Response
+	*/
+
+	public function ajaxHoursMoth()
+	{
+		if(Request::ajax()){
+			$horas = $this::getHoursMoth(Request::input('month'), Request::input('year'));
+			return $horas;
+		}
+		
+		return 'Error';
 	}
 
 }

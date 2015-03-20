@@ -1438,7 +1438,7 @@ body > .header .logo .icon {
 .box .box-header > .ion,
 .box .box-header .box-title {
   display: inline-block;
-  padding: 10px 10px 10px 10px;
+  padding: 10px 0px 0px 0px;
   margin: 0;
   font-size: 20px;
   font-weight: 400;
@@ -3553,6 +3553,14 @@ fieldset[disabled] .btn-vk.active {
 
 */
 
+
+
+#btnNewNota, #btnNewEvent {
+  margin-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
 .draggable {
   border-radius: 3px;
   cursor:pointer;
@@ -3564,6 +3572,11 @@ fieldset[disabled] .btn-vk.active {
 .errorCal {
   cursor:pointer;
   cursor: hand;
+}
+
+#horasColText td {
+  text-align: center;
+  font-size: 1.3em;
 }
 
 .login {
@@ -3609,6 +3622,15 @@ fieldset[disabled] .btn-vk.active {
   border-color: #ddd;
 }
 
+.fc-title {
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+#turnoActual {
+  font-size: 1.1em;
+  font-weight: bold;
+}
 
 
 @media only screen and (max-device-width: 640px) {

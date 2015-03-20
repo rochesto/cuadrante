@@ -29,7 +29,7 @@
         //imprimir turnos
 		jQuery.each(turnos, function(index, val) {
 
-			if(val['user_id'] == 1000){
+			if(val['user_id'] == 10){
 				$('#turnosBox').append('<li><span class="handle ui-sortable-handle"></span><span class="text" style="background-color: '+val['backgroundColor']+'; color: white; border-radius: 5px; "> '+val['title']+'</span></li>');
 			}else{
 

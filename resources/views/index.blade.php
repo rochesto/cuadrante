@@ -13,7 +13,7 @@
 			<div class="col-md-2">
 				 <div class="box box-primary">
 				 	<div class="box-header">
-                        <h4><button class=".btn .btn-sm" id="btnNewNota">Añadir nota</button></h4>
+                        <h4 id="btnNewNota" ><button class="btn btn-default">Añadir nota</button></h4>
                         <div id="divNewNota">
 						    <form action="" id ="add-event-form" name="add-event-form">
 						        <label for="title">Titulo</label>

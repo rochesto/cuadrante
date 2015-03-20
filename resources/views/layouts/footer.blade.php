@@ -2,6 +2,8 @@
 	<input type="hidden" data-data="{{ $events }}" id="eventos" />
 	<input type="hidden" data-data="{{ $turnos }}" id="turnosFooter" />
 	<input type="hidden" data-data="{{ $horas }}" id="horasFooter" />
+	<input type="hidden" data-data="{{ $mes }}" id="mesFooter" />
+	<input type="hidden" data-data="{{ $year }}" id="yearFooter" />
 	<input type="hidden" name="_token" value="{{{ csrf_token() }}}" /> 
 </div>
 
@@ -16,8 +18,6 @@
 
     $(document).ready(function(){
 
-
-
     	$('.content').on('contextmenu', function(event) {
     		event.preventDefault();
     	});
@@ -31,6 +31,9 @@
     	var eventos = $('#eventos').data('data');
     	var turnos = $('#turnosFooter').data('data');
     	var horas = $('#horasFooter').data('data');
+    	var hoy = new Date();
+    	var dia = new Date();
+    	dia = new Date($('#yearFooter').data('data'), $('#mesFooter').data('data') - 1, 01);
 
     	 /*
 	    /
@@ -47,7 +50,7 @@
 	    }); 
 
 
-	    $('#turnosContent').append('<div><button><a href="perfil">Editar</a></button></div>');
+	    $('#turnosContent').append('<div id="btnNewEvent"><a class="btn btn-default" href="perfil">Editar</a></div>');
 
 
 	   	$('#turnoAddSubmit').on('click', function(event) {
@@ -69,16 +72,7 @@
 
         			}
         		}
-        	})
-        	.done(function() {
-        		console.log("success");
-        	})
-        	.fail(function() {
-        		console.log("error");
-        	})
-        	.always(function() {
-        		console.log("complete");
-         	});
+        	});
 	   	});	    
 
     	/*
@@ -170,17 +164,7 @@
 			        				errorCal();
 			        			}
 			        		},
-			        	})
-			        	.done(function() {
-			        		console.log("success");
-			        		location.reload();
-			        	})
-			        	.fail(function() {
-			        		console.log("error");
-			        	})
-			        	.always(function() {
-			        		console.log("complete");
-			         	});
+			        	});
 			      	},	
 				}]
 	   		});
@@ -195,8 +179,6 @@
 
 	    ini_events($('#draggable div.draggable'));
 	    
-	    
-		
 
 	    /*
 		/
@@ -204,10 +186,9 @@
 		/
 		/
 	    */
-       	$('#calendar').fullCalendar({
+	   
 
-       		
-       		
+       	$('#calendar').fullCalendar({
        		editable: true,
             droppable: true,
             sortable: true,
@@ -216,7 +197,8 @@
 
 	        dayClick: function(date){
 
-	        	$('#allEvent').text('');
+       			currentMonth = $('#calendar').fullCalendar('getDate');
+       			currentMonth = currentMonth.format('MM');
 
 	        	jQuery.each(turnos, function(index, val) {
 
@@ -263,30 +245,20 @@
 				        		success: function(resultado){
 				        			if(resultado == 'Ok'){
 	        							$('#calendar').fullCalendar('render');
+	        							location.reload();
 				        			}
 				        			else{
 				        				errorCal();
 				        			}
 				        		},
 				        	})
-				        	.done(function() {
-				        		console.log("success");
-				        		location.reload();
-				        	})
-				        	.fail(function() {
-				        		console.log("error");
-				        	})
-				        	.always(function() {
-				        		console.log("complete");
-				         	});
 				      	},	
 				    }
 				]});
+				chargeHours();
 	        },
 
 	        drop: function(date, allDay) {
-
-
 
 	        	// retrieve the dropped element's stored Event Object
                 var originalEventObject = $(this).data('eventObject');
@@ -313,6 +285,7 @@
 	        				
 	        			if(resultado == 'Ok'){
 	        				$('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+	        				chargeHours();
 	        			}else if(resultado == 'Oka'){
 	        				location.reload();
 	        			}
@@ -320,18 +293,9 @@
 	        				errorCal();
 	        			}
 	        		}
-	        	})
-	        	.done(function() {
-	        		console.log("success");
-					
-	        	})
-	        	.fail(function() {
-	        		console.log("error");
-	        	})
-	        	.always(function() {
-	        		console.log("complete");
 	        	});
-				
+	        	chargeHours();
+
 		    },
 
 		    eventClick: function(calEvent) {
@@ -361,15 +325,8 @@
 				        		data: { id: calEvent.id ,title: $('#editEventTitle').val(), backgroundColor: $('#editEventcolor').val() },
 				        	})
 				        	.done(function() {
-				        		console.log("success");
 				        		$('#calendar').fullCalendar('updateEvent', calEvent);
 				        		location.reload();
-				        	})
-				        	.fail(function() {
-				        		console.log("error");
-				        	})
-				        	.always(function() {
-				        		console.log("complete");
 				        	});
 				    	},
 				    },
@@ -394,20 +351,13 @@
 				        				errorCal();
 				        			}
 				        		}
-				        	})
-				        	.done(function() {
-				        		console.log("success");
-				        	})
-				        	.fail(function() {
-				        		console.log("error");
-				        	})
-				        	.always(function() {
-				        		console.log("complete");
 				        	});
+				        	chargeHours();
 				      	},
 				    }
 				  ]
 				});
+				chargeHours();
 		    },
 
        	    eventDrop: function(event) {
@@ -422,38 +372,84 @@
 	        		data: { id: event['id'], start: event['start'].format() },
 	        	})
 	        	.done(function() {
-	        		console.log("success");
 	        		$('#calendar').fullCalendar('updateEvent', event);
-	        	})
-	        	.fail(function() {
-	        		console.log("error");
-	        		errorCal();
-	        	})
-	        	.always(function() {
-	        		console.log("complete");
 	        	});
+	        	chargeHours();
 		    },
 
-		    eventMouseover: function( event ) { 
-
-		    	$('#calendar').on('mouseenter', function(e) {
-
-		    		$(document).text('<div style=" top:'+e.pageY-50+'; left: '+e.pageX+'; position: absolute; border: 1px solid black; padding: 5px">Hola</div>');
-		    		
-		    	});
-		    },
         });
+
+		/*
+		//Cambia el mes actual al dato por la url
+		 */
 		
+		$('#calendar').fullCalendar('gotoDate', dia );
+
+
+		function reloadPage(mes, year){
+
+			var url = "{{ URL::to('calendario?month=meszzyear=ano') }}";
+			url = url.replace('mes', mes);
+			url = url.replace('ano', year);
+			url = url.replace('zz', '&');
+			window.location = url;
+		}
+
+		$('.fc-today-button').click(function() {
+		    reloadPage(hoy.getMonth()+1, hoy.getFullYear());
+		});
+
+		$('.fc-prev-button').click(function(e) {
+			var mes = dia.getMonth();
+			reloadPage(mes, $('#yearFooter').data('data'));	
+		});
+
+		$('.fc-next-button').click(function(e) {
+			var mes = dia.getMonth();
+			mes = mes + 2;
+			reloadPage(mes, $('#yearFooter').data('data'));
+		});
+
+
+		// 
 		//Cargamos las horas de cada semana
 		//
-		console.log($(".fc-week").css('height'));
-		$('#horasColText').append('<tr id="horasColRightTitle" ><th>Horas</th><th>restantes</th></tr>');
-		for (var i = 1; i < Object.keys(horas).length - 2; i++) {
-			var text = 'semana'+i;
-			var rest = 37.5 - parseInt(horas[text]);
-			$('#horasColText').append('<tr><td id="horasColText'+i+'" style="height: '+$(".fc-week").css('height')+'">'+horas[text]+'</td><td>'+rest+'</td></tr>');
-		};	
-		$('#horasColText').append('<tr id="horasColRightTitle"><th>Horas ciclo</th></tr><tr><td id="horasColTotal">'+horas['semana']+'</td></tr>');
+		function chargeHours(){
+			$.ajax({
+        		headers:
+			    {
+			        'X-CSRF-Token': $('input[name="_token"]').val()
+			    },
+        		url: 'calendario/horas',
+        		type: 'POST',
+        		data: { 'month': dia.getMonth()+1, 'year': dia.getFullYear()},
+        		success: function(resultado){
+        			resultado = JSON.parse(resultado);
+        			
+        			$('#horasColText').text('');
+					$('#horasColText').append('<tr id="horasColRightTitle" ><th>Horas</th><th>restantes</th></tr>');
+					var num = 1;
+					for (var i = 1; i < Object.keys(resultado).length - 2; i++) {
+						
+						
+						var text = 'semana'+i;
+						var rest = 37.5 - parseInt(resultado[text]);
+
+						if (resultado['primeraSemana'] > num || num > resultado['numeroSemanas']){
+							$('#horasColText').append('<tr><td id="horasColText'+i+'" style="height: '+$(".fc-week").css('height')+'">'+resultado[text]+'</td><td>'+rest+'</td></tr>');
+							num = num + 1;
+						}else{
+							$('#horasColText').append('<tr><td id="horasColText'+i+'" style="height: '+$(".fc-week").css('height')+'; background-color: #faa">'+resultado[text]+'</td><td style="height: '+$(".fc-week").css('height')+'; background-color: #faa">'+rest+'</td></tr>');
+							num = num + 1;
+						}
+						
+					};	
+					$('#horasColText').append('<tr id="horasColRightTitle"><th>Horas ciclo</th></tr><tr><td id="horasColTotal">'+resultado['semana']+'</td></tr>');
+        		},
+        	});
+		}
+		
+		chargeHours();
 
 
     });

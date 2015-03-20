@@ -22,28 +22,8 @@ class ProfileController extends Controller {
 		{
 
 			$id = Auth::id();
-			
 
-			// $profil = UserProfile::where('user_id', '=', $id)->get();
-			
-			// if(!$profil){
-				
-			// 	$profile = new UserProfile();
-			// 	$profile->user_id = $id;
-	  //       	$profile->asuntos_propios = '5';
-	  //       	$profile->vacaciones = '22';
-	  //       	$profile->permiso_urgente = '0';
-	  //       	$profile->baja = '0';
-	  //       	$profile->indisposicion = '0';
-	  //       	$profile->examen = '0';
-	  //       	$profile->comision = '0';
-	  //       	$profile->horas_semanales = '40';
-	  //       	$profile->singularizados = '0';
-
-	  //       	$profile->save();
-			// }
-
-		    $turnos = Turno::where('user_id', '=', 1000)
+		    $turnos = Turno::where('user_id', '=', 10)
 		    	->orWhere('user_id', '=', $id)
 		    	->get(array('id', 'user_id', 'title', 'description', 'horas', 'backgroundColor'));
 			$turnos = json_encode($turnos);

@@ -15,15 +15,6 @@
                     <div class="box-header ui-sortable-handle" style="cursor: move;">
                         <i class="fa fa-list-alt"></i>
                         <h3 class="box-title">Turnos</h3>
-                        <!-- <div class="box-tools pull-right">
-                            <ul class="pagination pagination-sm inline">
-                                <li><a href="#">«</a></li>
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">»</a></li>
-                            </ul>
-                        </div> -->
                     </div><!-- /.box-header -->
                     <div class="box-body">
                         <ul class="todo-list ui-sortable turnosBox" id="turnosBox">
