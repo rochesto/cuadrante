@@ -3579,12 +3579,12 @@ fieldset[disabled] .btn-vk.active {
   font-size: 1.3em;
 }
 
-.login {
+.btn-xs {
   margin-top: 10%;
   color: black;
 }
 
-.login a {
+.btn-xs a {
 
   color: black;
 }

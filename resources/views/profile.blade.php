@@ -37,13 +37,44 @@
                         <h3 class="box-title">Permisos</h3>
                     </div><!-- /.box-header -->
                     <div class="box-body" id="profileHoras">
-                        <p id="profileHorasPAP">Asuntos Propios: <input type="number" size="4" max="30" min="0" id="profileHorasAP"></p>
-                        <p id="profileHorasPVacaciones">Vacaciones: <input type="number" size="4" max="30" min="0" id="profileHorasVacaciones"></p>
-                        <p id="profileHorasPPU">Permiso Urgente: </p>
-                        <p id="profileHorasPBaja">Baja: </p>
-                        <p> <button id="profileHorasGuardar">Guardar</button><img src="img/load2.gif" width="30" id="profileBajaLoad"> <b id="profileHorasGuardarB"></b> </p>
-
-
+                    <table class="table table-striped">
+                        <tr>
+                            <td>Asuntos Propios: </td>
+                            <td><input type="number" size="4" max="30" min="0" id="profileHorasAP"></td>
+                        </tr>
+                        <tr>
+                            <td>Vacaciones: </td>
+                            <td><input type="number" size="4" max="30" min="0" id="profileHorasVacaciones"></td>
+                        </tr>
+                        <tr>
+                            <td>Baja:</td>
+                            <td id="profileHorasPBaja"></td>
+                        </tr>
+                        <tr>
+                            <td>Permiso Urgente:</td>
+                            <td><div id="profileHorasPPU"></div></td>
+                        </tr>
+                        <tr>
+                            <td>Indisposición:</td>
+                            <td><div id="profileHorasInd"></div></td>
+                        </tr>
+                        <tr>
+                            <td>Examenes:</td>
+                            <td><div id="profileHorasExa"></div></td>
+                        </tr>
+                        <tr>
+                            <td>Horas semanales:</td>
+                            <td><select name="profileHorasSem" id="profileHorasSem">
+                                    <option value="37.5">37.5</option>
+                                    <option value="40">40</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><button id="profileHorasGuardar">Guardar</button></td>
+                        </tr>
+                       
+                    </table>
                     </div><!-- /.box-body -->
                 </div>
             </div>

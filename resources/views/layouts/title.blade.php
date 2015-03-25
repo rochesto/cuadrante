@@ -1,5 +1,5 @@
 
-<a href="{{ URL::to('/?month='.date('m').'&year='.date('Y')) }}" class="logo">
+<a href="{{ URL::to('/') }}" class="logo">
     <!-- Add the class icon to your logo image or logo icon to add the margining -->
     Cuadrante.es
 </a>
@@ -15,14 +15,14 @@
     <div class="navbar-right">
         <ul class="nav navbar-nav user user-menu">
 
-            <i class="glyphicon glyphicon-user"></i>
+            {{-- <i class="glyphicon glyphicon-user"></i> --}}
             <span>
             @if (Auth::guest())
-                <button class="login"><a href="/auth/login">Login</a></button>
-                <button class="login"><a href="/auth/register">Register</a></button>
+                <button class="btn btn-default btn-xs"><a href="/auth/login">Login</a></button>
+                <button class="btn btn-default btn-xs"><a href="/auth/register">Register</a></button>
             @else
-                <button class="login"><a href="perfil">{{ Auth::user()->name }} </a></button>
-                <button class="login"><a href="/auth/logout">Salir</a></button>
+                <button class="btn btn-default btn-xs"><a href="perfil">{{ Auth::user()->name }} </a></button>
+                <button class="btn btn-default btn-xs"><a href="/auth/logout">Salir</a></button>
             @endif
             </span>
         </ul>

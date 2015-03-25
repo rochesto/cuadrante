@@ -401,13 +401,25 @@
 
 		$('.fc-prev-button').click(function(e) {
 			var mes = dia.getMonth();
-			reloadPage(mes, $('#yearFooter').data('data'));	
+			var year = $('#yearFooter').data('data');
+			if(mes < 1){
+				mes = 12;
+				year = year - 1;
+			}
+			reloadPage(mes, year);	
 		});
 
 		$('.fc-next-button').click(function(e) {
 			var mes = dia.getMonth();
+			var year = $('#yearFooter').data('data');
+
 			mes = mes + 2;
-			reloadPage(mes, $('#yearFooter').data('data'));
+			if(mes > 12){
+				mes = 1;
+				year = year + 1;
+			}
+
+			reloadPage(mes, year);
 		});
 
 
@@ -442,7 +454,6 @@
 							$('#horasColText').append('<tr><td id="horasColText'+i+'" style="height: '+$(".fc-week").css('height')+'; background-color: #faa">'+resultado[text]+'</td><td style="height: '+$(".fc-week").css('height')+'; background-color: #faa">'+rest+'</td></tr>');
 							num = num + 1;
 						}
-						
 					};	
 					$('#horasColText').append('<tr id="horasColRightTitle"><th>Horas ciclo</th></tr><tr><td id="horasColTotal">'+resultado['semana']+'</td></tr>');
         		},

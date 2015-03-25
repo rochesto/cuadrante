@@ -11,6 +11,8 @@
 |
 */
 
+Route::get('/', 'IntroController@index');
+
 // Gestion de eventos
 Route::get('calendario{month?}/{year?}', 'EventController@index');
 Route::post('calendario/add', 'EventController@addEvent');

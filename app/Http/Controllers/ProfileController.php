@@ -29,7 +29,7 @@ class ProfileController extends Controller {
 			$turnos = json_encode($turnos);
 
 			$horas = UserProfile::where('user_id', '=', $id)
-				->get(array('id', 'asuntos_propios', 'vacaciones', 'permiso_urgente', 'baja', 'indisposicion', 'examen'));
+				->get(array('id', 'asuntos_propios', 'vacaciones', 'permiso_urgente', 'baja', 'indisposicion', 'examen', 'comision', 'horas_semanales'));
 			$horas = json_encode($horas);
 
 			return view('profile')->with(compact('turnos'))->with(compact('horas'));
@@ -52,8 +52,10 @@ class ProfileController extends Controller {
 
 			if($profile->asuntos_propios = $_POST['asuntos_propios']){
 				if($profile->vacaciones = $_POST['vacaciones']){
-					if($profile->save()){
-						return 'Ok';
+					if($profile->horas_semanales = $_POST['horas']){
+						if($profile->save()){
+							return 'Ok';
+						}
 					}
 				}
 			}

@@ -57,15 +57,6 @@
         				errorCal();
         			}
         		}
-        	})
-        	.done(function() {
-        		console.log("success");
-        	})
-        	.fail(function() {
-        		console.log("error");
-        	})
-        	.always(function() {
-        		console.log("complete");
         	});
 	    });
 
@@ -109,6 +100,12 @@
         $('#profileHorasVacaciones').attr('value', horas[0]['vacaciones']);
         $('#profileHorasPPU').append(horas[0]['permiso_urgente']);
         $('#profileHorasPBaja').append(horas[0]['baja']);
+        $('#profileHorasInd').append(horas[0]['indisposicion']);
+        $('#profileHorasExa').append(horas[0]['examen']);
+
+        var horasSemana = '#profileHorasSem option[value="'+horas[0]['horas_semanales']+'"]';
+        $(horasSemana).attr('selected', 'selected');
+
         $('#profileHorasGuardar').on('click', function(event) {
             event.preventDefault();
 
@@ -119,7 +116,7 @@
                 },
                 url: 'perfil/update',
                 type: 'POST',
-                data: {id: horas[0]['id'], asuntos_propios: $('#profileHorasAP').val(), vacaciones: $('#profileHorasVacaciones').val() },
+                data: {id: horas[0]['id'], asuntos_propios: $('#profileHorasAP').val(), vacaciones: $('#profileHorasVacaciones').val(), horas: $('#profileHorasSem').val() },
                 success: function(resultado){
                     if (resultado == 'Ok') {
                         
@@ -127,15 +124,6 @@
                         errorCal();
                     }
                 }
-            })
-            .done(function() {
-                console.log("success");
-            })
-            .fail(function() {
-                console.log("error");
-            })
-            .always(function() {
-                console.log("complete");
             });
             
         });

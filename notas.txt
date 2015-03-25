@@ -1,3 +1,20 @@
----eventcontroller
+Tareas pendientes.
 
-Corregir mes de junio
+Errores:
+	
+	
+
+Pendiente:
+
+	1. Crear pagina de introduccion.
+
+	2. Boton añadir nota: añadir mas detalles, cambiar selector de fecha por jqueryui
+
+	3. Corregir horas: Noches
+
+	4. Remodelar registro y login:
+		4.1. Quitar obligacion requisitos contraseña
+
+	5. Añadir barra inferior: mostrara horas del mes y año, noches de mes y año, festivos de mes y año
+
+	6. Implementar arrastrar eventos para abarcar varios dias.
