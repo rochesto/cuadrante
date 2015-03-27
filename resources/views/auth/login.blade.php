@@ -46,9 +46,13 @@
 								<button type="submit" class="btn btn-primary" style="margin-right: 15px;">
 									Login
 								</button>
-
-								<a href="/password/email">Has olvidado tu contraseña?</a>
+								
+								<a href="/password/email">Recuperar contraseña?</a>
 							</div>
+							<div class="col-md-6 col-md-offset-4">
+								<button class="btn btn-default btn-xs"><a href="/auth/register">Registrar</a></button>
+							</div>
+							
 						</div>
 					</form>
 				</div>

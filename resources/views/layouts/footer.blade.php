@@ -4,6 +4,7 @@
 	<input type="hidden" data-data="{{ $horas }}" id="horasFooter" />
 	<input type="hidden" data-data="{{ $mes }}" id="mesFooter" />
 	<input type="hidden" data-data="{{ $year }}" id="yearFooter" />
+	<input type="hidden" data-data="{{ $horasProfile }}" id="horasProfileFooter" />
 	<input type="hidden" name="_token" value="{{{ csrf_token() }}}" /> 
 </div>
 
@@ -27,7 +28,8 @@
     	/ Variables
 		/
     	 */
-    	
+    	var horasProfile = $('#horasProfileFooter').data('data');
+    	horasProfile = horasProfile[0]['horas_semanales'];
     	var eventos = $('#eventos').data('data');
     	var turnos = $('#turnosFooter').data('data');
     	var horas = $('#horasFooter').data('data');
@@ -91,6 +93,8 @@
 	    $("#editEvent").hide();
 	    $('#allEventDiv').hide();
 	    $('#divNewNota').hide();
+
+	    $( "#datepicker" ).datepicker();
 	    
 
     	//Selecciona los elmentos evento, que seran arrastrados y añadidos a la base de datos
@@ -370,9 +374,14 @@
 	        		url: 'calendario/update',
 	        		type: 'POST',
 	        		data: { id: event['id'], start: event['start'].format() },
-	        	})
-	        	.done(function() {
-	        		$('#calendar').fullCalendar('updateEvent', event);
+	        		success: function(resultado){
+				        			
+	        			if(resultado == 'Ok'){
+	        				$('#calendar').fullCalendar('updateEvent', event);
+	        			}else{
+	        				errorCal();
+	        			}
+	        		}
 	        	});
 	        	chargeHours();
 		    },
@@ -445,7 +454,7 @@
 						
 						
 						var text = 'semana'+i;
-						var rest = 37.5 - parseInt(resultado[text]);
+						var rest = horasProfile - parseFloat(resultado[text]);
 
 						if (resultado['primeraSemana'] > num || num > resultado['numeroSemanas']){
 							$('#horasColText').append('<tr><td id="horasColText'+i+'" style="height: '+$(".fc-week").css('height')+'">'+resultado[text]+'</td><td>'+rest+'</td></tr>');

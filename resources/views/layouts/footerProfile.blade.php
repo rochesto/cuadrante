@@ -81,16 +81,7 @@
 
         			}
         		}
-        	})
-        	.done(function() {
-        		console.log("success");
-        	})
-        	.fail(function() {
-        		console.log("error");
-        	})
-        	.always(function() {
-        		console.log("complete");
-         	});
+        	});
 	   	});
 
         /*
@@ -106,6 +97,8 @@
         var horasSemana = '#profileHorasSem option[value="'+horas[0]['horas_semanales']+'"]';
         $(horasSemana).attr('selected', 'selected');
 
+        console.log(horas[0]['id']);
+        
         $('#profileHorasGuardar').on('click', function(event) {
             event.preventDefault();
 
@@ -121,6 +114,7 @@
                     if (resultado == 'Ok') {
                         
                     }else{
+                        console.log(resultado);
                         errorCal();
                     }
                 }

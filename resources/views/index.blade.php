@@ -20,7 +20,7 @@
 						        <input type="text" name="titleNewNota" id="titleNewNota"/>
 						        <p>
 						        <label for="add-date">Fecha</label>
-						        <input type="date" name="dateNewNota" id="dateNewNota" tabindex="-1" />
+						        <input type="text" id="datepicker">
 						        </p>
 						        <p>
 						        <label for="add-color">Color</label>
@@ -60,7 +60,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h6 class="box-title">Añadir Evento</h6>
+                            <h6 class="box-title">Añadir Turno</h6>
                         </div>
                         <div class="box-body" id="turnoAdd">
                         	<input type="text" placeholder="Título" size="14" id="turnoAddTitle">

@@ -119,7 +119,7 @@ class TurnoTableSeeder extends Seeder {
 			'user_id' => '10',
 	        'title' => 'Singularizado',
 	        'description' => 'Singularizado',
-	        'horas' => '0',
+	        'horas' => '7.5',
 	        'allDay' => '1',
 	        'backgroundColor' => '#22ee11',
 	        'textColor' => 'white'

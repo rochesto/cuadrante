@@ -42,13 +42,13 @@ class EventController extends Controller {
 				$newperfil->save();
 
 			}
-			
 
 			$events = $this::allEvents();
  			$turnos = $this::allTurnos();
+ 			$perfil = $this::getHoursWeekProflie();
  			$horas = $this::getHoursMoth(Request::input('month'), Request::input('year'), $id);
 
-			return view('index')->with(compact('events'))->with(compact('turnos'))->with(compact('horas'))->with('mes', Request::input('month'))->with('year', Request::input('year'));
+			return view('index')->with(compact('events'))->with(compact('turnos'))->with(compact('horas'))->with('mes', Request::input('month'))->with('year', Request::input('year'))->with('horasProfile', $perfil);
 		}
 		else
 		{
@@ -364,6 +364,24 @@ class EventController extends Controller {
 		$events = json_encode($events);
 
 		return $events;
+	}
+
+	/**
+	 * 
+	 *
+	 * @return 
+	*/
+
+	public function getHoursWeekProflie(){
+
+		$id = Auth::id();
+
+		$perfil = UserProfile::where('user_id', '=', $id)
+				->get(array('horas_semanales'));
+
+		// $perfil = json_encode($perfil);
+
+		return $perfil;
 	}
 
 
