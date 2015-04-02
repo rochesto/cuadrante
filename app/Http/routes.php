@@ -18,6 +18,7 @@ Route::get('calendario{month?}/{year?}', 'EventController@index');
 Route::post('calendario/add', 'EventController@addEvent');
 Route::post('calendario/destroy', 'EventController@destroyEvent');
 Route::post('calendario/update', 'EventController@updateEvent');
+Route::post('calendario/resize', 'EventController@resizeEvent');
 Route::post('calendario/edit', 'EventController@editEvent');
 Route::post('calendario/horas', 'EventController@ajaxHoursMoth');
 
@@ -27,6 +28,10 @@ Route::post('turnos/delete', 'TurnosController@removeTurno');
 
 // Gestion de profile
 Route::post('perfil/update', 'ProfileController@updateProfile');
+
+// Gestion de comentarios
+Route::post('comment/store', 'CommentController@store');
+
 
 // Rutas generales
 Route::get('about', 'AboutController@index');

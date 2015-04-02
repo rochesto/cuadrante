@@ -55,27 +55,7 @@
 	    $('#turnosContent').append('<div id="btnNewEvent"><a class="btn btn-default" href="perfil">Editar</a></div>');
 
 
-	   	$('#turnoAddSubmit').on('click', function(event) {
-	   		event.preventDefault();
 
-	   		$.ajax({
-	        	headers:
-			    {
-			        'X-CSRF-Token': $('input[name="_token"]').val()
-			    },
-        		url: 'calendario/turno',
-        		type: 'POST',
-        		data: { title: $('#turnoAddTitle').val(), description: $('#turnoAddDesc').val(), backgroundColor: $('#turnoAddColor').val(), horas: $('#turnoAddHoras').val() },
-        		success: function(res){
-        			if(res == 'Ok')
-        			{
-        				location.reload();
-        			}else{
-
-        			}
-        		}
-        	});
-	   	});	    
 
     	/*
 	    /
@@ -93,9 +73,9 @@
 	    $("#editEvent").hide();
 	    $('#allEventDiv').hide();
 	    $('#divNewNota').hide();
+	    $('#turnoAdd').hide();
 
-	    $( "#datepicker" ).datepicker();
-	    
+	    $( "#datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
 
     	//Selecciona los elmentos evento, que seran arrastrados y añadidos a la base de datos
     	function ini_events(ele) {
@@ -120,11 +100,61 @@
 	        });
 	    }
 
-	    /*
+	    /***************************************
 	    /
 	    /	Funciones ventana emergente
 	    /
-	    */
+	    ***************************************/
+	   
+	   //
+	   //
+	   //	Dialog nuevo turno
+	   //
+	   //
+	   
+	   	$('#btnNewTurno').on('click', function(event) {
+	   		event.preventDefault();
+
+	   		// $("#dateNewNota").attr('value', Date("d-m-Y"));
+
+	   		$('#turnoAdd').dialog({
+	   			title: "Nuevo Turno",
+	   			draggable: true,
+
+	   			buttons: [
+	   			{
+			  		text: "Cancelar",
+			  		click: function(){
+			  			$( this ).dialog( "close" );
+			  		}
+			  	},
+			   	{
+			      	text: "Añadir",
+			      	
+			      	click: function() {
+			        	$( this ).dialog( "close" );
+
+			        	$.ajax({
+				        	headers:
+						    {
+						        'X-CSRF-Token': $('input[name="_token"]').val()
+						    },
+			        		url: 'calendario/turno',
+			        		type: 'POST',
+			        		data: { title: $('#turnoAddTitle').val(), description: $('#turnoAddDesc').val(), backgroundColor: $('#turnoAddColor').val(), horas: $('#turnoAddHoras').val() },
+			        		success: function(res){
+			        			if(res == 'Ok')
+			        			{
+			        				location.reload();
+			        			}else{
+
+			        			}
+			        		}
+			        	});
+			      	},	
+				}]
+	   		});
+	   	});
 	   
 	   	// 
 	   	// Gestion de nuevo evento
@@ -159,7 +189,7 @@
 						    },
 			        		url: 'calendario/add',
 			        		type: 'POST',
-			        		data: { id: 0, title: $('#titleNewNota').val(), start: $('#dateNewNota').val(), backgroundColor:  $('#colorNewNota').val()},
+			        		data: { id: 0, title: $('#titleNewNota').val(), start: $('#datepicker').val(), backgroundColor:  $('#colorNewNota').val()},
 			        		success: function(resultado){
 			        			if(resultado == 'Ok'){
         							$('#calendar').fullCalendar('render');
@@ -232,7 +262,7 @@
 				        	var datos;
 				        	jQuery.each(turnos, function(index, val) {
 				        		if(val['id'] == id){
-				        			datos = {id: val['id'], title: val['title'], start: date.format(), backgroundColor: val['backgroundColor']};
+				        			datos = {id: val['id'], title: val['title'], start: date.format(), end: date.format(), backgroundColor: val['backgroundColor']};
 				        		}
 				        	});
 
@@ -256,6 +286,9 @@
 				        			}
 				        		},
 				        	})
+				        	.fail(function() {
+				        		errorCal();
+				        	});
 				      	},	
 				    }
 				]});
@@ -273,9 +306,15 @@
                 // assign it the date that was reported
                 copiedEventObject.title = $(this).data('turno');
                 copiedEventObject.start = date.format();
-                copiedEventObject.allDay = allDay;
+                // copiedEventObject.allDay = allDay;
                 copiedEventObject.backgroundColor = $(this).css("background-color");
                 copiedEventObject.borderColor = "black";
+
+    //         	nextDay = new Date(date);
+    //         	console.log(nextDay);
+				// nextDay = new Date(nextDay.getDate() + 1);
+    //         	console.log(nextDay);
+
 
 		        $.ajax({
 		        	headers:
@@ -284,11 +323,11 @@
 				    },
 	        		url: 'calendario/add',
 	        		type: 'POST',
-	        		data: {id: $(this).data('id'), title: $(this).data('turno'), description: $(this).data('description'), start: date.format(), backgroundColor: $(this).css("background-color") },
+	        		data: {id: $(this).data('id'), title: $(this).data('turno'), description: $(this).data('description'), start: date.format(), end: date.format()	, backgroundColor: $(this).css("background-color") },
 	        		success: function(resultado){
-	        				
 	        			if(resultado == 'Ok'){
 	        				$('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+	        				location.reload();
 	        				chargeHours();
 	        			}else if(resultado == 'Oka'){
 	        				location.reload();
@@ -297,6 +336,9 @@
 	        				errorCal();
 	        			}
 	        		}
+	        	})
+	        	.fail(function() {
+	        		errorCal();
 	        	});
 	        	chargeHours();
 
@@ -308,8 +350,6 @@
 	        	$('#editEventdesc').attr('value', calEvent.description);
 	        	$('#editEventcolor').attr('value', calEvent.backgroundcolor);
 
-	        	
-		    	
 		    	$('#editEvent').dialog({
 
 	        		title: 'Editar nota',
@@ -355,6 +395,7 @@
 				        				errorCal();
 				        			}
 				        		}
+
 				        	});
 				        	chargeHours();
 				      	},
@@ -365,6 +406,11 @@
 		    },
 
        	    eventDrop: function(event) {
+       	    	if (event['end']) {
+       	    		$end = event['end'].format();
+       	    	}else{
+       	    		$end = event['start'].format();
+       	    	};
 
 		    	$.ajax({
 	        		headers:
@@ -373,17 +419,44 @@
 				    },
 	        		url: 'calendario/update',
 	        		type: 'POST',
-	        		data: { id: event['id'], start: event['start'].format() },
+	        		data: { id: event['id'], start: event['start'].format(), end: $end },
 	        		success: function(resultado){
-				        			
 	        			if(resultado == 'Ok'){
 	        				$('#calendar').fullCalendar('updateEvent', event);
 	        			}else{
 	        				errorCal();
 	        			}
 	        		}
+	        	})
+	        	.fail(function() {
+	        		errorCal();
 	        	});
 	        	chargeHours();
+		    },
+		    eventResize: function(event, delta, revertFunc) {
+
+		        $.ajax({
+	        		headers:
+				    {
+				        'X-CSRF-Token': $('input[name="_token"]').val()
+				    },
+	        		url: 'calendario/resize',
+	        		type: 'POST',
+	        		data: { id: event['id'], start: event['start'].format(), end: event['end'].format() },
+	        		success: function(resultado){
+	        			console.log(resultado);
+	        			if(resultado == 'Ok'){
+	        				$('#calendar').fullCalendar('updateEvent', event);
+	        			}else{
+	        				errorCal();
+	        			}
+	        		}
+	        	})
+	        	.fail(function() {
+	        		errorCal();
+	        	});
+	        	chargeHours();
+
 		    },
 
         });
@@ -391,7 +464,6 @@
 		/*
 		//Cambia el mes actual al dato por la url
 		 */
-		
 		$('#calendar').fullCalendar('gotoDate', dia );
 
 
@@ -448,23 +520,35 @@
         			resultado = JSON.parse(resultado);
         			
         			$('#horasColText').text('');
-					$('#horasColText').append('<tr id="horasColRightTitle" ><th>Horas</th><th>restantes</th></tr>');
-					var num = 1;
+					$('#horasColText').append('<tr id="horasColRightTitle" ><th>Horas</th><th>Restantes</th></tr>');
+					var contador = 1;
 					for (var i = 1; i < Object.keys(resultado).length - 2; i++) {
 						
 						
 						var text = 'semana'+i;
 						var rest = horasProfile - parseFloat(resultado[text]);
+						var restMes = (horas['numeroSemanas'] * horasProfile) - resultado['semana'];
 
-						if (resultado['primeraSemana'] > num || num > resultado['numeroSemanas']){
-							$('#horasColText').append('<tr><td id="horasColText'+i+'" style="height: '+$(".fc-week").css('height')+'">'+resultado[text]+'</td><td>'+rest+'</td></tr>');
-							num = num + 1;
+						if(resultado['primeraSemana'] == 1){
+							if (resultado['numeroSemanas'] >= contador){
+								$('#horasColText').append('<tr><td id="horasColText'+i+'" style="height: '+$(".fc-week").css('height')+'; background-color: #cdd1f7">'+resultado[text]+'</td><td style="height: '+$(".fc-week").css('height')+'; background-color: #cdd1f7">'+rest+'</td></tr>');
+								contador = contador + 1;
+							}else{
+								$('#horasColText').append('<tr><td id="horasColText'+i+'" style="height: '+$(".fc-week").css('height')+'">'+resultado[text]+'</td><td>'+rest+'</td></tr>');
+							}
 						}else{
-							$('#horasColText').append('<tr><td id="horasColText'+i+'" style="height: '+$(".fc-week").css('height')+'; background-color: #faa">'+resultado[text]+'</td><td style="height: '+$(".fc-week").css('height')+'; background-color: #faa">'+rest+'</td></tr>');
-							num = num + 1;
+							if (resultado['numeroSemanas'] >= contador-1 && resultado['primeraSemana'] <= contador){
+								$('#horasColText').append('<tr><td id="horasColText'+i+'" style="height: '+$(".fc-week").css('height')+'; background-color: #cdd1f7">'+resultado[text]+'</td><td style="height: '+$(".fc-week").css('height')+'; background-color: #cdd1f7">'+rest+'</td></tr>');
+								contador = contador + 1;
+							}else{
+								$('#horasColText').append('<tr><td id="horasColText'+i+'" style="height: '+$(".fc-week").css('height')+'">'+resultado[text]+'</td><td>'+rest+'</td></tr>');
+								contador = contador + 1;
+							}
 						}
+
+
 					};	
-					$('#horasColText').append('<tr id="horasColRightTitle"><th>Horas ciclo</th></tr><tr><td id="horasColTotal">'+resultado['semana']+'</td></tr>');
+					$('#horasColText').append('<tr id="horasColRightTitle"><th>Horas ciclo</th><th>Restantes</th></tr><tr><td id="horasColTotal">'+resultado['semana']+'</td><td>'+restMes+'</td></tr>');
         		},
         	});
 		}

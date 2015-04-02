@@ -13,6 +13,7 @@
 
 		$('.ui-sortable').sortable();
         $('#profileBajaLoad').hide();
+        $('#turnoAdd').hide();
 
 
 		//Funcion imprimir error
@@ -60,29 +61,55 @@
         	});
 	    });
 
-	    $('#turnoAddSubmit').on('click', function(event) {
-	   		event.preventDefault();
-            $('#profileBajaLoad').show();
+	    //
+       //
+       //   Dialog nuevo turno
+       //
+       //
+       
+        $('#btnNewTurno').on('click', function(event) {
+            event.preventDefault();
 
-	   		$.ajax({
-	        	headers:
-			    {
-			        'X-CSRF-Token': $('input[name="_token"]').val()
-			    },
-        		url: 'calendario/turno',
-        		type: 'POST',
-        		data: {title: $('#turnoAddTitle').val(), backgroundColor: $('#turnoAddColor').val(), horas: $('#turnoAddHoras').val() },
-        		success: function(res){
-        			if(res == 'Ok')
-        			{
+            // $("#dateNewNota").attr('value', Date("d-m-Y"));
 
-        				location.reload();
-        			}else{
+            $('#turnoAdd').dialog({
+                title: "Nuevo Turno",
+                draggable: true,
 
-        			}
-        		}
-        	});
-	   	});
+                buttons: [
+                {
+                    text: "Cancelar",
+                    click: function(){
+                        $( this ).dialog( "close" );
+                    }
+                },
+                {
+                    text: "Añadir",
+                    
+                    click: function() {
+                        $( this ).dialog( "close" );
+
+                        $.ajax({
+                            headers:
+                            {
+                                'X-CSRF-Token': $('input[name="_token"]').val()
+                            },
+                            url: 'calendario/turno',
+                            type: 'POST',
+                            data: { title: $('#turnoAddTitle').val(), description: $('#turnoAddDesc').val(), backgroundColor: $('#turnoAddColor').val(), horas: $('#turnoAddHoras').val() },
+                            success: function(res){
+                                if(res == 'Ok')
+                                {
+                                    location.reload();
+                                }else{
+
+                                }
+                            }
+                        });
+                    },  
+                }]
+            });
+        });
 
         /*
         Gestionas horas user

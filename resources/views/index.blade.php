@@ -19,7 +19,7 @@
 						        <label for="title">Titulo</label>
 						        <input type="text" name="titleNewNota" id="titleNewNota"/>
 						        <p>
-						        <label for="add-date">Fecha</label>
+						        <label for="add-date">Inicio</label>
 						        <input type="text" id="datepicker">
 						        </p>
 						        <p>
@@ -54,25 +54,19 @@
 						<div id="turnosContent" class="draggable">
                             
 						</div>
+                        <h4 id="btnNewTurno" ><button class="btn btn-default">Añadir turno</button></h4>
 
-                    </div><!-- /.box-body -->
-					<br>
-
-                    <div class="box box-primary">
-                        <div class="box-header">
-                            <h6 class="box-title">Añadir Turno</h6>
-                        </div>
-                        <div class="box-body" id="turnoAdd">
-                        	<input type="text" placeholder="Título" size="14" id="turnoAddTitle">
+						<div class="box-body" id="turnoAdd">
+                        	Título: <input type="text" placeholder="Título" size="14" id="turnoAddTitle">
                         	<br>
                         	Color: <input type="color" value="#0055cc" id="turnoAddColor">
                         	<br>
                         	Horas: <input type="number" value="8" id="turnoAddHoras" min="1" max="24" step="0.1">
                         	<br>
-                        	<button id="turnoAddSubmit">Guardar</button>
                         </div>
-                    </div>
-                </div><!-- /. box -->
+
+                    </div><!-- /.box-body -->
+                </div>
 
 			</div>
 			<div class="col-md-8">
@@ -101,7 +95,7 @@
 			<div class="col-md-2" id="horasColRight">
 				<div class="box box-primary">
 				 	<div class="fc-left">
-                        <h2 >Horas</h2>
+                        <h2 id="horasColRightNumero">Horas: </h2>
                     </div>
                     <div class="box-body" id="horasColText">
                         

@@ -19,15 +19,15 @@ class DatabaseSeeder extends Seeder {
         //mostramos el mensaje de que los usuarios se han insertado correctamente
         $this->command->info('User table seeded!');
 
-        //insertamos los usuarios
         $this->call('TurnoTableSeeder');
-        //mostramos el mensaje de que los usuarios se han insertado correctamente
         $this->command->info('Turno table seeded!');
 
-        //insertamos los usuarios
         $this->call('ProfileUserTableSeeder');
-        //mostramos el mensaje de que los usuarios se han insertado correctamente
         $this->command->info('Profile table seeded!');
+
+       	$this->call('NoticiasTableSeeder');
+        $this->command->info('Noticias table seeded!');
+        
         
 	}
 
@@ -62,6 +62,7 @@ class TurnoTableSeeder extends Seeder {
     public function run()
     {
         DB::table('turnos')->insert(array(
+        	'id' => '1',
 			'user_id' => '10',
 	        'title' => 'Tarde',
 	        'description' => 'Turno de tarde',
@@ -71,6 +72,7 @@ class TurnoTableSeeder extends Seeder {
 	        'textColor' => 'white'
         ));
         DB::table('turnos')->insert(array(
+        	'id' => '2',
 			'user_id' => '10',
 	        'title' => 'Mañana',
 	        'description' => 'Turno de mañana',
@@ -80,6 +82,7 @@ class TurnoTableSeeder extends Seeder {
 	        'textColor' => 'white'
         ));
         DB::table('turnos')->insert(array(
+        	'id' => '3',
 			'user_id' => '10',
 	        'title' => 'Noche',
 	        'description' => 'Turno de noche',
@@ -89,6 +92,7 @@ class TurnoTableSeeder extends Seeder {
 	        'textColor' => 'white'
         ));
         DB::table('turnos')->insert(array(
+        	'id' => '4',
 			'user_id' => '10',
 	        'title' => 'Saliente',
 	        'description' => 'Turno de Saliente',
@@ -98,6 +102,7 @@ class TurnoTableSeeder extends Seeder {
 	        'textColor' => 'white'
         ));
         DB::table('turnos')->insert(array(
+        	'id' => '5',
 			'user_id' => '10',
 	        'title' => 'Libre',
 	        'description' => 'Turno de Libre',
@@ -107,6 +112,7 @@ class TurnoTableSeeder extends Seeder {
 	        'textColor' => 'white'
         ));
         DB::table('turnos')->insert(array(
+        	'id' => '6',
 			'user_id' => '10',
 	        'title' => 'Asunto Propio',
 	        'description' => 'Día de asunto propio',
@@ -116,6 +122,7 @@ class TurnoTableSeeder extends Seeder {
 	        'textColor' => 'white'
         ));
         DB::table('turnos')->insert(array(
+        	'id' => '7',
 			'user_id' => '10',
 	        'title' => 'Singularizado',
 	        'description' => 'Singularizado',
@@ -125,6 +132,7 @@ class TurnoTableSeeder extends Seeder {
 	        'textColor' => 'white'
         ));
         DB::table('turnos')->insert(array(
+        	'id' => '8',
 			'user_id' => '10',
 	        'title' => 'Vacaciones',
 	        'description' => 'Vacaciones',
@@ -134,15 +142,17 @@ class TurnoTableSeeder extends Seeder {
 	        'textColor' => 'white'
         ));
         DB::table('turnos')->insert(array(
+        	'id' => '9',
 			'user_id' => '10',
 	        'title' => 'Baja',
 	        'description' => 'Baja',
 	        'horas' => '7.5',
 	        'allDay' => '1',
-	        'backgroundColor' => '#cceecc',
+	        'backgroundColor' => '#612222',
 	        'textColor' => 'white'
         ));
         DB::table('turnos')->insert(array(
+        	'id' => '10',
 			'user_id' => '10',
 	        'title' => 'Permiso Urgente',
 	        'description' => 'Día de permiso urgente',
@@ -151,30 +161,29 @@ class TurnoTableSeeder extends Seeder {
 	        'backgroundColor' => 'green',
 	        'textColor' => 'white'
         ));
-        DB::table('turnos')->insert(array(
-        	'id' => '20',
-			'user_id' => '10',
-	        'title' => 'Turno(MTNSL)',
-	        'description' => 'Mañana tarde noche',
-	        'horas' => '24',
-	        'allDay' => '1',
-	        'backgroundColor' => 'black',
-	        'textColor' => 'white'
-        ));
-        DB::table('turnos')->insert(array(
-        	'id' => '21',
-			'user_id' => '10',
-	        'title' => 'Turno(TM/NSLL)',
-	        'description' => 'Tarde mañana noche',
-	        'horas' => '24',
-	        'allDay' => '1',
-	        'backgroundColor' => 'black',
-	        'textColor' => 'white'
-        )); 
+   //      DB::table('turnos')->insert(array(
+   //      	'id' => '20',
+			// 'user_id' => '10',
+	  //       'title' => 'Turno(MTNSL)',
+	  //       'description' => 'Mañana tarde noche',
+	  //       'horas' => '24',
+	  //       'allDay' => '1',
+	  //       'backgroundColor' => 'black',
+	  //       'textColor' => 'white'
+   //      ));
+   //      DB::table('turnos')->insert(array(
+   //      	'id' => '21',
+			// 'user_id' => '10',
+	  //       'title' => 'Turno(TM/NSLL)',
+	  //       'description' => 'Tarde mañana noche',
+	  //       'horas' => '24',
+	  //       'allDay' => '1',
+	  //       'backgroundColor' => 'black',
+	  //       'textColor' => 'white'
+   //      )); 
     }
 }
 
-//clase para insertar usuarios
 class ProfileUserTableSeeder extends Seeder {
  
     public function run()
@@ -189,8 +198,26 @@ class ProfileUserTableSeeder extends Seeder {
         	'indisposicion' => '0',
         	'examen' => '0',
         	'comision' => '0',
-        	'horas_semanales' => '40',
+        	'horas_semanales' => '37.5',
         	'singularizados' => '0'
+        ));
+
+    }
+}
+
+class NoticiasTableSeeder extends Seeder {
+ 
+    public function run()
+    {
+ 		
+ 		DB::table('noticias')->insert(array(
+        	'title' => 'Presentación',
+        	'body' => 'Despues de muchas horas de trabajo, estamos orgullosos de presentarles cuadrante.es. Una página donde podran gestionar sus cuadrantes de forma sencilla y visual. Esperemos que les sea de utilidad y siempre agradeceremos sus comentarios.'
+        ));
+
+        DB::table('noticias')->insert(array(
+        	'title' => 'Presentación 2',
+        	'body' => 'Despues de muchas horas de trabajo, estamos orgullosos de presentarles cuadrante.es. Una página donde podran gestionar sus cuadrantes de forma sencilla y visual. Esperemos que les sea de utilidad y siempre agradeceremos sus comentarios.'
         ));
 
     }

@@ -17,16 +17,20 @@
                         <h3 class="box-title">Turnos</h3>
                     </div><!-- /.box-header -->
                     <div class="box-body">
+                        <h4 id="btnNewTurno" ><button class="btn btn-default">Añadir turno</button></h4>
+
                         <ul class="todo-list ui-sortable turnosBox" id="turnosBox">
 
                         </ul>
                     </div><!-- /.box-body -->
+
                     <div class="box-body" id="turnoAdd">
-                    	<h3>Añadir turno</h3>
-                    	<input type="text" placeholder="Evento" size="14" id="turnoAddTitle">
-                    	Color: <input type="color" value="#0055cc" id="turnoAddColor">
-                    	Horas: <input type="number" value="8" id="turnoAddHoras" min="1" max="24" step="0.1">
-                    	<button id="turnoAddSubmit">Guardar</button>
+                        Título: <input type="text" placeholder="Título" size="14" id="turnoAddTitle">
+                        <br>
+                        Color: <input type="color" value="#0055cc" id="turnoAddColor">
+                        <br>
+                        Horas: <input type="number" value="8" id="turnoAddHoras" min="1" max="24" step="0.1">
+                        <br>
                     </div>
                 </div>
             </div>

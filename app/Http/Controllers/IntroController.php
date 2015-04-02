@@ -5,6 +5,9 @@ use Cuadrante\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 
+use Cuadrante\Noticia;
+use Cuadrante\Comment;
+
 class IntroController extends Controller {
 
 	/**
@@ -14,7 +17,14 @@ class IntroController extends Controller {
 	 */
 	public function index()
 	{
-		return view('intro');	
+
+		$noticias = Noticia::orderBy('created_at', 'desc')->get();
+			// ->simplePaginate(5);
+
+		$comentarios = Comment::orderBy('created_at', 'desc')
+			->simplePaginate(5);
+
+		return view('intro')->with(compact('noticias'))->with(compact('comentarios'));
 	}
 
 

@@ -12,6 +12,8 @@ use Carbon\Carbon;
 
 class EventController extends Controller {
 
+	private $countDays = 0;
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -238,6 +240,8 @@ class EventController extends Controller {
         	}
         	else{
 
+        		$end = new Carbon($_POST['end']);
+
         		$evento = new Event;
 
 	        	$evento->user_id = Auth::id();
@@ -246,7 +250,7 @@ class EventController extends Controller {
 	        	$evento->description = '';
 	        	$evento->allDay = true;
 	        	$evento->start = $_POST['start'];
-	        	$evento->end = '0000-00-00';
+	        	$evento->end = $end;
 	        	$evento->url = '';
 	        	$evento->className = $_POST['title'];
 	        	$evento->backgroundColor = $_POST['backgroundColor'];
@@ -293,18 +297,43 @@ class EventController extends Controller {
 		if(Request::ajax()){
 
 			if ($evento = Event::find($_POST['id'])){
-
+				
 				if($evento->start = $_POST['start']){
-					if($evento->save()){
+					if($evento->end = $_POST['end']){
+						if($evento->save()){
+							return 'Ok';
+						}
+					}
+				}
+			}
+			return 'Error';
+		}
+		return 'Error';
+	}
 
-						return 'Ok';
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @return Response
+	*/
+	public function resizeEvent()
+	{
+		if(Request::ajax()){
+
+			if ($evento = Event::find($_POST['id'])){
+				
+				if($evento->start = $_POST['start']){
+					if($evento->end = $_POST['end']){
+						if($evento->save()){
+							return 'Ok';
+						}
 					}
 				}
 			}
 			return 'Error';
 		}
 	}
-
+	
 	
 
 	/**
@@ -379,9 +408,41 @@ class EventController extends Controller {
 		$perfil = UserProfile::where('user_id', '=', $id)
 				->get(array('horas_semanales'));
 
-		// $perfil = json_encode($perfil);
-
 		return $perfil;
+	}
+
+
+	/**
+	 * Calculamos horas por turno
+	 *
+	 * @return 
+	*/
+
+	public function getHoursTurno($idTurno, $domingo = false){
+
+		if($idTurno == 3){
+			if($domingo){
+				return 2;
+			}else{
+				return 8;
+			}
+		}elseif ($idTurno <= 2) {
+			$horas = Turno::find($idTurno, array('horas'));
+			$horas = floatval($horas['horas']);
+			return $horas;
+		}elseif ($idTurno > 5 && $idTurno <= 10) {
+			$this->countDays = $this->countDays + 1;
+			if($this::getHoursWeekProflie()[0]['horas_semanales'] == 40){
+				return 8;
+			}else{
+				return 7.5;
+			}
+		}
+		
+		$horas = Turno::find($idTurno, array('horas'));
+		$horas = floatval($horas['horas']);
+		return $horas;	
+		
 	}
 
 
@@ -397,32 +458,151 @@ class EventController extends Controller {
 	{	
 		
 		$total = 0.0;
-		$countDays = 0;
+		$mesAntes =  new Carbon($start);
+		$mesAntes = $mesAntes->subMonth();
+		$mesPost =  new Carbon($start);
+		$mesPost = $mesPost->addMonth();
+		$start = new Carbon($start);
+		$end = new Carbon($end);
 
 		$events = Event::where('user_id', '=', $id)
-			->Where('start', '>=', $start)
-			->Where('start', '<', $end)
-			->get(array('turno_id', 'start'));
+			->Where('start', '>=', $mesAntes)
+			->Where('start', '<', $mesPost)
+			->get(array('turno_id', 'start', 'end'));
+
 		foreach ($events as $key => $value) {
-			if($value['turno_id'] != 3){
-				if ($value['turno_id'] == 8 || $value['turno_id'] == 9) {
-					$countDays++;
+			$startEvent = new Carbon($value['start']);
+			$endEvent = new Carbon($value['end']);
+
+
+			// COmprobamos si la semana anterior hay noche en el domingo y sumamos 6 horas en caso afirmativo
+			$domingoAnterior = new Carbon($start);
+			$domingoAnterior = $domingoAnterior->subDay();
+
+			if($value['turno_id'] == 3 && ($startEvent == $domingoAnterior || ($endEvent > $domingoAnterior && $startEvent <= $domingoAnterior))){
+				$total = $total + 6;
+			}
+
+			// Comprobamos si el evento avarca un solo dia
+			if(($value['end'] == '0000-00-00 00:00:00') || $endEvent->diffInDays($startEvent) < 2){
+
+				if($startEvent->gte($start) && $startEvent->lt($end)){
+					if($startEvent->dayOfWeek == 0){
+						$total = $total + $this::getHoursTurno($value['turno_id'], true);
+					}else{
+						$total = $total + $this::getHoursTurno($value['turno_id']);
+					}
 				}
-				$horas = Turno::find($value['turno_id'], array('horas'));
-	    		$horas = floatval($horas['horas']);
-	    		$total = $total + $horas;
-			}elseif ($value['turno_id'] == 3) {
-				if($end == $value['start']){
-					$total = $total + 2.0;
-				}else{
-					$horas = Turno::find($value['turno_id'], array('horas'));
-	    			$horas = floatval($horas['horas']);
-	    			$total = $total + $horas;
+
+			}
+			// Comprobamos si termina y empieza dentro de la semana
+			if (($startEvent >= $start) && ($endEvent <= $end)) {
+
+				if($value['turno_id'] == 3){
+					$var = ($endEvent->diffInDays($startEvent) * 8);
+					$total = $total + $var;
+
+					if($endEvent->eq($end)){
+						$total = $total - 6;
+					}
+				}
+				elseif ($value['turno_id'] == 5 || $value['turno_id'] == 4) {
+					$total = $total;
+				}elseif ($value['turno_id'] <= 2) {
+					$total = $total + $this::getHoursTurno($value['turno_id']) * $endEvent->diffInDays($startEvent);
+				}elseif ($value['turno_id'] > 5 && $value['turno_id'] <= 10) {
+					$this->countDays = $this->countDays + ($endEvent->diffInDays($startEvent));
+					if($this::getHoursWeekProflie()[0]['horas_semanales'] == 40){
+						$var = ($endEvent->diffInDays($startEvent) * 8);
+						$total = $total + $var;
+					}else{
+						$var = ($endEvent->diffInDays($startEvent) * 7.5);
+						$total = $total + $var;
+					}
+				}elseif ($value['turno_id'] > 10){
+					$total = $total + $this::getHoursTurno($value['turno_id']) * $endEvent->diffInDays($startEvent);
 				}
 			}
+
+			// Comprobamos si empieza y termina fuera de la semana
+			elseif (($endEvent >= $end) && ($startEvent <= $start)) {
+				if($value['turno_id'] == 3){
+					$var = (7 * 8) - 6;
+					$total = $total + $var;
+				}elseif ($value['turno_id'] <= 2) {
+					$total = $total + $this::getHoursTurno($value['turno_id']) * 7;
+				}elseif ($value['turno_id'] > 5 && $value['turno_id'] <= 10) {
+					return $this::getHoursWeekProflie()[0]['horas_semanales'];
+				}else{
+					$total = $total + $this::getHoursTurno($value['turno_id']) * 7;
+				}
+			}
+
+			// Comprobamos si empieza en la misma semana y acaba en la siguiente
+			elseif (($startEvent >= $start) && ($endEvent > $end)) {
+
+				if($startEvent < $end){
+					if($value['turno_id'] == 3){
+						$var = ($end->diffInDays($startEvent) * 8);
+						$total = $total + $var;
+
+						if($endEvent->eq($end)){
+							$total = $total - 6;
+						}
+					}
+					elseif ($value['turno_id'] == 5 || $value['turno_id'] == 4) {
+						$total = $total;
+					}elseif ($value['turno_id'] <= 2) {
+						$total = $total + $this::getHoursTurno($value['turno_id']) * $end->diffInDays($startEvent);
+					}elseif ($value['turno_id'] > 5 && $value['turno_id'] <= 10) {
+						$this->countDays = $this->countDays + ($end->diffInDays($startEvent));
+						if($this::getHoursWeekProflie()[0]['horas_semanales'] == 40){
+							$var = ($end->diffInDays($startEvent) * 8);
+							$total = $total + $var;
+						}else{
+							$var = ($end->diffInDays($startEvent) * 7.5);
+							$total = $total + $var;
+						}
+					}elseif ($value['turno_id'] > 10){
+						$total = $total + $this::getHoursTurno($value['turno_id']) * $end->diffInDays($startEvent);
+					}
+				}
+			}
+			// COmprobamos si empieza en la semana anterior y acaba en la misma
+			elseif (($startEvent < $start) && ($endEvent < $end)) {
+
+				if($endEvent > $start){
+					if($value['turno_id'] == 3){
+						$var = ($endEvent->diffInDays($start) * 8);
+						$total = $total + $var;
+
+						if($endEvent->eq($end)){
+							$total = $total - 6;
+						}
+					}
+					elseif ($value['turno_id'] == 5 || $value['turno_id'] == 4) {
+						$total = $total;
+					}elseif ($value['turno_id'] <= 2) {
+						$total = $total + $this::getHoursTurno($value['turno_id']) * $endEvent->diffInDays($start);
+					}elseif ($value['turno_id'] > 5 && $value['turno_id'] <= 10) {
+						$this->countDays = $this->countDays + ($endEvent->diffInDays($start));
+						if($this::getHoursWeekProflie()[0]['horas_semanales'] == 40){
+							$var = ($endEvent->diffInDays($start) * 8);
+							$total = $total + $var;
+						}else{
+							$var = ($endEvent->diffInDays($start) * 7.5);
+							$total = $total + $var;
+						}
+					}elseif ($value['turno_id'] > 10){
+						$total = $total + $this::getHoursTurno($value['turno_id']) * $endEvent->diffInDays($start);
+					}
+				}
+			}
+
 		}
-		if ($countDays >= 6){
-			return 37.5;
+
+		if ($this->countDays >= 6){
+			return $this::getHoursWeekProflie()[0]['horas_semanales'];
 		}
 		return $total;
 	}
@@ -478,15 +658,6 @@ class EventController extends Controller {
 
 		$semana5 =  new Carbon($semana4);
 		$semana5 = $semana5->modify('Next Monday');
-		$semana5 = $semana5->modify('Next Thursday');
-
-		if ($semana5->month == $month) {
-			$numeroSemanas = 5;
-		}else{
-			$numeroSemanas = 4;
-		}
-
-		$semana5 = $semana5->modify('Last Monday');
 
 		$semana6 =  new Carbon($semana5);
 		$semana6 = $semana6->modify('Next Monday');
@@ -495,14 +666,24 @@ class EventController extends Controller {
 		$semana7 = $semana7->modify('Next Monday');
 
 		/*
-		// Creamos variable con numero de horas por semana
+		// Creamos variable con numero de horas por semana y asignamos cual es la primera semana
 		 */
+		$numeroSemanas = new Carbon($semana5);
+		$numeroSemanas->modify('Next Thursday');
+
+		if ($numeroSemanas->month == intval($month)) {
+			$numeroSemanas = 5;
+		}else{
+			$numeroSemanas = 4;
+		}
+
 		if ($jueves->day <= 4) {
 			$primerdia = new Carbon($semana1);
 			$primeraSemana = 1;
 		}else{
 			$primerdia = new Carbon($semana2);
 			$primeraSemana = 2;
+			$numeroSemanas = $numeroSemanas - 1; // Restamos la primera semana que no cuenta para el mes
 		}
 
 		if ($numeroSemanas == 5) {
@@ -512,7 +693,6 @@ class EventController extends Controller {
 			$ultimodia = new Carbon($semana5);
 		}
 		
-		$totalHoras = $this::getHoursWeek($primerdia, $ultimodia, $id);
 
 		$semana1 = $this::getHoursWeek($semana1, $semana2, $id);
 		$semana2 = $this::getHoursWeek($semana2, $semana3, $id);
@@ -520,6 +700,18 @@ class EventController extends Controller {
 		$semana4 = $this::getHoursWeek($semana4, $semana5, $id);
 		$semana5 = $this::getHoursWeek($semana5, $semana6, $id);
 		$semana6 = $this::getHoursWeek($semana6, $semana7, $id);
+
+		if($primeraSemana == 1){
+			$totalHoras = $semana1 + $semana2 + $semana3 + $semana4;
+			if($numeroSemanas == 5){
+				$totalHoras = $totalHoras + $semana5;
+			}
+		}else{
+			$totalHoras = $semana2 + $semana3 + $semana4 + $semana5;
+			if($numeroSemanas == 5){
+				$totalHoras = $totalHoras + $semana6;
+			}
+		}
 
 		$semanas = array('semana1' => $semana1, 'semana2' => $semana2, 'semana3' => $semana3, 'semana4' => $semana4, 'semana5' => $semana5, 'semana6' => $semana6,  'semana' => $totalHoras, 'primeraSemana' => $primeraSemana, 'numeroSemanas' => $numeroSemanas);
 

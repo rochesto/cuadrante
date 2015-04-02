@@ -25,7 +25,7 @@
             De momento, esperamos que disfrute de la aplición.
             <br>
             <br>
-            Si tiene alguna sugerencia comuniquesnolo en el siguiente corre$
+            Si tiene alguna sugerencia comuniquesnolo en el siguiente correo
             <br>
             <br>
             <b>rochesto@hotmail.com</b>

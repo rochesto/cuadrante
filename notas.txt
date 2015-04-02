@@ -1,25 +1,20 @@
 Tareas pendientes.
 
-Errores:
+#########################
+#       Errores:        #
+#########################
 	
-	Cuando se añade un evento no se puede mover sin recargar.
+	Corregir noches: Cuando se redimensiona y abarca el domingo cuenta mal las horas.
+	
+#########################
+#       Pendiente:      #
+#########################
+	
+	2. Boton añadir nota: añadir mas detalles.
 
-	Boton añadir nota: No guarda la nota
-
-
-Pendiente:
-
-	1. Crear pagina de introduccion. Sistema de comentarios.
-
-	2. Boton añadir nota: añadir mas detalles, cambiar selector de fecha por jqueryui
-
-	3. Corregir horas: Noches
+	3. Añadir boton borrar mes.
 
 	4. Remodelar registro y login:
 		4.1. Quitar obligacion requisitos contraseña
 
 	5. Añadir barra inferior: mostrara horas del mes y año, noches de mes y año, festivos de mes y año
-
-	6. Implementar arrastrar eventos para abarcar varios dias.
-
-	7. Poner horas ha realizar en cada mes, junto al titulo 'Horas'
