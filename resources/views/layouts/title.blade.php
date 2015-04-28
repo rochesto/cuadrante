@@ -5,6 +5,8 @@
 </a>
 <!-- Header Navbar: style can be found in header.less -->
 <nav class="navbar navbar-static-top" role="navigation">
+
+    <button type="button" class="btn btn-warning" id="beta">Beta</button>
     <!-- Sidebar toggle button
     <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
         <span class="sr-only">Toggle navigation</span>

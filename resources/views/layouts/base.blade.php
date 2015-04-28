@@ -40,7 +40,7 @@
         <footer class="main-footer">
             <strong>Copyright © 2015</strong> Autor: <a href="https://aldrabon.wordpress.com/">Rochesto</a>
             <br> All rights reserved.
-            <b id="version">Version</b> 0.1
+            <b id="version">Version</b> 0.2
         </footer>
         
         
