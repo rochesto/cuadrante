@@ -7,13 +7,12 @@
 <nav class="navbar navbar-static-top" role="navigation">
 
     <button type="button" class="btn btn-warning" id="beta">Beta</button>
-    <!-- Sidebar toggle button
-    <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
-        <span class="sr-only">Toggle navigation</span>
+    <a href="" class="sidebar-toggle" role="button" id="menuMobile">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
-    </a>-->
+    </a>
+
     <div class="navbar-right">
         <ul class="nav navbar-nav user user-menu">
 

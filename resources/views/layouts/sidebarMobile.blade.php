@@ -1,4 +1,4 @@
-<ul class="sidebar-menu">
+<ul id="sidebar-mobile">
     <li class="active">
         <a href="{{ URL::to('calendario?month='.date('m').'&year='.date('Y')) }}">
             <i class="fa fa-calendar"></i> <span>Cuadrante</span>

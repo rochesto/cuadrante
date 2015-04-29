@@ -3596,6 +3596,10 @@ fieldset[disabled] .btn-vk.active {
   text-align: center;
 }
 
+#menuMobile {
+    display: none;
+}
+
 #horasColRight h2 {
   margin: 0;
   margin-bottom: 14px;
@@ -3630,6 +3634,24 @@ fieldset[disabled] .btn-vk.active {
   font-weight: bold;
 }
 
+#sidebar-mobile {
+  color: white;
+  list-style: none;
+  padding: 5px;
+}
+
+#sidebar-mobile li{
+  margin-top: 10px;
+}
+
+#sidebar-mobile a {
+  background-color: #3C8DBC;
+  border: 1px black;
+  border-radius: 3px;
+  color: white;
+  padding: 3px;
+}
+
 #turnoActual {
   font-size: 1.1em;
   font-weight: bold;
@@ -3640,6 +3662,10 @@ fieldset[disabled] .btn-vk.active {
   
   .col-md-2 {
     display: none;
+  }
+
+  #menuMobile {
+    display: inline;
   }
 
 }

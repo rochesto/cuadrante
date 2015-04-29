@@ -24,6 +24,9 @@
         
         <div class="wrapper row-offcanvas row-offcanvas-left" style="min-height: 555px;">
             <!-- Left side column. contains the logo and sidebar -->
+            
+            @include('layouts.sidebarMobile')
+
             <aside class="left-side sidebar-offcanvas" style="min-height: 1071px;">
                 <section class="sidebar">
                     @include('layouts.sidebarLeft')
@@ -38,11 +41,12 @@
         </div>
 
         <footer class="main-footer">
-            <strong>Copyright © 2015</strong> Autor: <a href="https://aldrabon.wordpress.com/">Rochesto</a>
+            <strong>Copyright © 2015</strong> Autor: Rochesto
+            {{-- <strong>Copyright © 2015</strong> Autor: <a href="https://aldrabon.wordpress.com/">Rochesto</a> --}}
             <br> All rights reserved.
             <b id="version">Version</b> 0.2
         </footer>
         
-        
+        @include('layouts.footerBase')
     </body>
 </html>
